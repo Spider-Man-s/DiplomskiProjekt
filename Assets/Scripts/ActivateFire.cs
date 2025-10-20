@@ -13,4 +13,10 @@ public class ActivateFire : MonoBehaviour
         }
     }
 
+    public void DeActivateFlame(int flameID){
+        if(flames[flameID-1]!=null){
+            flames[flameID-1].SetActive(false);
+        }
+    }
+
 }
