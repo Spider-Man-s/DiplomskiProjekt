@@ -7,6 +7,12 @@
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
+    "com.unity.2d.sprite": {
+      "version": "1.0.0",
+      "depth": 0,
+      "source": "builtin",
+      "dependencies": {}
+    },
     "com.unity.ai.navigation": {
       "version": "2.0.8",
       "depth": 0,
@@ -268,7 +274,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.xr.interaction.toolkit": {
-      "version": "3.1.2",
+      "version": "3.1.3",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -307,7 +313,7 @@
       "url": "https://packages.unity.com"
     },
     "com.xreal.xr": {
-      "version": "file:C:/Users/Filip/Downloads/com.xreal.xr.tar.gz",
+      "version": "file:C:/Users/Nekorisnica/Downloads/com.xreal.xr.tar.gz",
       "depth": 0,
       "source": "local-tarball",
       "dependencies": {
