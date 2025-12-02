@@ -1,0 +1,91 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &739450594351948736
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 488945253728138311, guid: 59da766189792b94584abd965244022c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 672253827683578034, guid: 59da766189792b94584abd965244022c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1710406656441788187, guid: 59da766189792b94584abd965244022c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3159429967269232833, guid: 59da766189792b94584abd965244022c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6059580397440578084, guid: 59da766189792b94584abd965244022c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 5.56
+      objectReference: {fileID: 0}
+    - target: {fileID: 6059580397440578084, guid: 59da766189792b94584abd965244022c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6059580397440578084, guid: 59da766189792b94584abd965244022c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -19.111954
+      objectReference: {fileID: 0}
+    - target: {fileID: 6059580397440578084, guid: 59da766189792b94584abd965244022c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6059580397440578084, guid: 59da766189792b94584abd965244022c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6059580397440578084, guid: 59da766189792b94584abd965244022c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6059580397440578084, guid: 59da766189792b94584abd965244022c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6059580397440578084, guid: 59da766189792b94584abd965244022c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6059580397440578084, guid: 59da766189792b94584abd965244022c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 6059580397440578084, guid: 59da766189792b94584abd965244022c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6149558437505988611, guid: 59da766189792b94584abd965244022c, type: 3}
+      propertyPath: m_Name
+      value: House 2 with fires Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 7232111673710726177, guid: 59da766189792b94584abd965244022c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8142183857761618414, guid: 59da766189792b94584abd965244022c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8681353926537077880, guid: 59da766189792b94584abd965244022c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8794083659140810228, guid: 59da766189792b94584abd965244022c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 59da766189792b94584abd965244022c, type: 3}
