@@ -16,6 +16,7 @@
     "com.unity.xr.arfoundation": "6.1.1",
     "com.unity.xr.hands": "1.5.1",
     "com.unity.xr.interaction.toolkit": "3.1.3",
+    "com.veriorpies.parrelsync": "https://github.com/VeriorPies/ParrelSync.git?path=/ParrelSync",
     "com.xreal.xr": "file:C:/Users/Nekorisnica/Downloads/com.xreal.xr.tar.gz",
     "com.unity.modules.accessibility": "1.0.0",
     "com.unity.modules.ai": "1.0.0",
