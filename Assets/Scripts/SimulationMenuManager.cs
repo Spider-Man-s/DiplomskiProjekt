@@ -6,8 +6,8 @@ public class SimulationMenuManager : MonoBehaviour
     [System.Serializable]
     public class HouseEntry
     {
-        public GameObject houseRoot;        
-        public GameObject functionsRoot;   
+        public GameObject houseRoot;
+        public GameObject functionsRoot;
     }
 
     [Header("Sve kuće koje se mogu simulirati")]
@@ -15,17 +15,18 @@ public class SimulationMenuManager : MonoBehaviour
 
     private ActivateFire activeActivateFire;
 
+    [Header("UI")]
     [SerializeField] private GameObject infoPopup;
+    [SerializeField] private GameObject warningPopup;
 
+    [Header("Handshake")]
+    [SerializeField] private HandshakeController handshake; // NOVO
 
     private void Start()
     {
-        int housesCount = (houses == null) ? 0 : houses.Length;
-        Debug.Log($"[SimulationMenuManager] Start, GameState.SelectedHouseIndex={GameState.SelectedHouseIndex}, houses.Length={housesCount}");
-
         if (houses == null || houses.Length == 0)
         {
-            Debug.LogError("[SimulationMenuManager] Nema kuća u SimulationMenuManager!");
+            Debug.LogError("[SimulationMenuManager] Nema kuća!");
             return;
         }
 
@@ -33,8 +34,6 @@ public class SimulationMenuManager : MonoBehaviour
 
         for (int i = 0; i < houses.Length; i++)
         {
-            string hrName = houses[i].houseRoot ? houses[i].houseRoot.name : "NULL";
-            string frName = houses[i].functionsRoot ? houses[i].functionsRoot.name : "NULL";
             bool active = (i == index);
 
             if (houses[i].houseRoot != null)
@@ -44,17 +43,11 @@ public class SimulationMenuManager : MonoBehaviour
                 houses[i].functionsRoot.SetActive(active);
 
             if (active && houses[i].functionsRoot != null)
-            {
                 activeActivateFire = houses[i].functionsRoot.GetComponent<ActivateFire>();
-            }
         }
 
-        Debug.Log($"[SimulationMenuManager] activeActivateFire final = {activeActivateFire}");
-
-        if (activeActivateFire == null)
-        {
-            Debug.LogWarning("[SimulationMenuManager] Nije pronađen ActivateFire za odabranu kuću!");
-        }
+        if (infoPopup != null) infoPopup.SetActive(false);
+        if (warningPopup != null) warningPopup.SetActive(false);
     }
 
     public void OnBackButton()
@@ -62,41 +55,46 @@ public class SimulationMenuManager : MonoBehaviour
         SceneManager.LoadScene("MainMenu");
     }
 
+    // gumb "Start sim"
     public void OnLockSelection()
     {
-        Debug.Log($"[SimulationMenuManager] OnLockSelection called, activeActivateFire={activeActivateFire}, GO={(activeActivateFire ? activeActivateFire.gameObject.name : "null")}");
-
         if (activeActivateFire == null)
+            return;
+
+        int[] selected = activeActivateFire.GetSelectedFireIndices();
+
+        if (selected == null || selected.Length == 0)
         {
-            Debug.LogWarning("[SimulationMenuManager] Nema ActivateFire instance za zaključavanje!");
+            if (warningPopup != null)
+                warningPopup.SetActive(true);
             return;
         }
 
-        // 1) uzmi koje su točke crvene iz aktivne kuće
-        int[] selected = activeActivateFire.GetSelectedFireIndices();
-
-        // 2) spremi u GameState da drugi dijelovi appa znaju
         GameState.SelectedFireIndices = selected;
 
-        Debug.Log("[SimulationMenuManager] LOCK SELECTION → Fire IDs: " +
-                  (selected.Length == 0 ? "nema" : string.Join(",", selected)));
-        SceneManager.LoadScene("SimulationOverview");
+        // Start handshake gate
+        if (handshake != null)
+            handshake.BeginHandshake();
+        else
+            Debug.LogError("[SimulationMenuManager] HandshakeController nije povezan u Inspectoru!");
     }
 
+    // POPUPS
     public void OnInfoButton()
     {
         if (infoPopup != null)
-        {
             infoPopup.SetActive(true);
-        }
     }
 
     public void OnCloseInfoButton()
     {
         if (infoPopup != null)
-        {
             infoPopup.SetActive(false);
-        }
     }
 
+    public void OnCloseWarningPopup()
+    {
+        if (warningPopup != null)
+            warningPopup.SetActive(false);
+    }
 }

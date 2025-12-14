@@ -6,6 +6,7 @@ public class HousePreviewUI : MonoBehaviour
     [Header("Spawn settings")]
     [SerializeField] private Transform spawnPoint;   // mjesto gdje će se kuća pojaviti
     [SerializeField] private GameObject[] housePrefabs;
+    [SerializeField] private GameObject infoPopup;
 
     private Transform currentModel;
 
@@ -44,5 +45,17 @@ public class HousePreviewUI : MonoBehaviour
     public void OnBackButton()
     {
         SceneManager.LoadScene("MainMenu");
+    }
+
+    public void OnInfoButton()
+    {
+        if (infoPopup != null)
+            infoPopup.SetActive(true);
+    }
+
+    public void OnCloseInfoButton()
+    {
+        if (infoPopup != null)
+            infoPopup.SetActive(false);
     }
 }
