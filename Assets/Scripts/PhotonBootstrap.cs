@@ -17,23 +17,33 @@ public class NetworkBootstrap : MonoBehaviourPunCallbacks
 
     void Start()
     {
+        Debug.Log("Bootstrap Start. Connecting...");
         PhotonNetwork.AutomaticallySyncScene = false;
 
         if (!PhotonNetwork.IsConnected)
-        {
             PhotonNetwork.ConnectUsingSettings();
-        }
+        else
+            Debug.Log("Already connected.");
     }
 
     public override void OnConnectedToMaster()
     {
-        PhotonNetwork.JoinOrCreateRoom(roomName,
-            new RoomOptions { MaxPlayers = 2 },
-            TypedLobby.Default);
+        Debug.Log("ConnectedToMaster. Joining room...");
+        PhotonNetwork.JoinOrCreateRoom(roomName, new RoomOptions { MaxPlayers = 2 }, TypedLobby.Default);
     }
 
     public override void OnJoinedRoom()
     {
-        Debug.Log($"Joined room: {PhotonNetwork.CurrentRoom.Name}, Players: {PhotonNetwork.CurrentRoom.PlayerCount}");
+        Debug.Log($"OnJoinedRoom: {PhotonNetwork.CurrentRoom.Name} count={PhotonNetwork.CurrentRoom.PlayerCount}");
+    }
+
+    public override void OnJoinRoomFailed(short returnCode, string message)
+    {
+        Debug.LogError($"OnJoinRoomFailed {returnCode} {message}");
+    }
+
+    public override void OnDisconnected(Photon.Realtime.DisconnectCause cause)
+    {
+        Debug.LogError($"Disconnected: {cause}");
     }
 }
