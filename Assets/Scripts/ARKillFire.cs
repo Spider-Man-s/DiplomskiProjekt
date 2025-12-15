@@ -3,13 +3,8 @@ using UnityEngine.InputSystem;
 
 public class ARKillFire : MonoBehaviour
 {
-    [Header("Extinguisher")]
-    public float range = 2.5f;
-    public LayerMask fireLayer;
-
-    [Header("XREAL Input")]
-    [SerializeField]
-    private InputActionReference rightTriggerAction;
+    public InputActionReference rightTriggerAction;
+    public float checkRadius = 2.0f;
 
     private void OnEnable()
     {
@@ -23,28 +18,36 @@ public class ARKillFire : MonoBehaviour
 
     void Update()
     {
-        float triggerValue = rightTriggerAction.action.ReadValue<float>();
-
-        if (triggerValue > 0.1f)
+        if (rightTriggerAction.action.ReadValue<float>() > 0.1f)
         {
-            TryExtinguish();
+            ExtinguishNearbyFire();
         }
     }
 
-    void TryExtinguish()
+    void ExtinguishNearbyFire()
     {
-        Ray ray = new Ray(transform.position, transform.forward);
+        Fire[] fires = FindObjectsOfType<Fire>();
 
-        if (Physics.Raycast(ray, out RaycastHit hit, range, fireLayer))
+        Fire closestFire = null;
+        float closestDistance = float.MaxValue;
+
+        Vector3 pos = transform.position;
+
+        foreach (var fire in fires)
         {
-            if (hit.collider.CompareTag("Fire"))
+            if (!fire.gameObject.activeInHierarchy) continue;
+
+            float distance = Vector3.Distance(pos, fire.transform.position);
+            if (distance <= checkRadius && distance < closestDistance)
             {
-                var fire = hit.collider.GetComponent<Fire>();
-                if (fire != null)
-                {
-                    fire.ApplyExtinguish(Time.deltaTime);
-                }
+                closestFire = fire;
+                closestDistance = distance;
             }
+        }
+
+        if (closestFire != null)
+        {
+            closestFire.ApplyExtinguish(Time.deltaTime);
         }
     }
 }
