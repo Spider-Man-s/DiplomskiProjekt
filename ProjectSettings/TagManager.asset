@@ -6,6 +6,8 @@ TagManager:
   tags:
   - ThumbnailOutline
   - ThumbnailInactive
+  - ShooFireShoo
+  - Fire
   layers:
   - Default
   - TransparentFX
@@ -13,7 +15,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - FireLayer
   - 
   - 
   - 
