@@ -1,5 +1,6 @@
 using UnityEngine;
 using Photon.Pun;
+using Photon.Realtime;
 using ExitGames.Client.Photon;
 
 public class ARFireReceiver : MonoBehaviourPunCallbacks, IOnEventCallback
