@@ -1,37 +1,39 @@
-using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using UnityEngine;
 
-public class PhotonBootstrap : MonoBehaviourPunCallbacks
+public class NetworkBootstrap : MonoBehaviourPunCallbacks
 {
-    [SerializeField] private string roomName = "GoriGoraGoriBorovina"; 
+    public static NetworkBootstrap Instance;
 
-    private void Start()
+    [SerializeField] string roomName = "GoriGoraGoriBorovina";
+
+    void Awake()
     {
+        if (Instance != null) { Destroy(gameObject); return; }
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
+
+    void Start()
+    {
+        PhotonNetwork.AutomaticallySyncScene = false;
+
         if (!PhotonNetwork.IsConnected)
         {
-            PhotonNetwork.AutomaticallySyncScene = false; 
             PhotonNetwork.ConnectUsingSettings();
-        }
-        else
-        {
-            JoinRoom();
         }
     }
 
     public override void OnConnectedToMaster()
     {
-        JoinRoom();
-    }
-
-    private void JoinRoom()
-    {
-        var roomOptions = new RoomOptions { MaxPlayers = 10 };
-        PhotonNetwork.JoinOrCreateRoom(roomName, roomOptions, TypedLobby.Default);
+        PhotonNetwork.JoinOrCreateRoom(roomName,
+            new RoomOptions { MaxPlayers = 2 },
+            TypedLobby.Default);
     }
 
     public override void OnJoinedRoom()
     {
-        Debug.Log("Joined Photon room: " + roomName);
+        Debug.Log($"Joined room: {PhotonNetwork.CurrentRoom.Name}, Players: {PhotonNetwork.CurrentRoom.PlayerCount}");
     }
 }

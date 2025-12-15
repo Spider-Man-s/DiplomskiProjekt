@@ -366,7 +366,7 @@
       "hash": "610157ad762084380380148ba8ce14e266a6da97"
     },
     "com.xreal.xr": {
-      "version": "file:C:/Users/Nekorisnica/Downloads/com.xreal.xr.tar.gz",
+      "version": "file:D:/Faks/Diplomski projekt/com.xreal.xr.tar.gz",
       "depth": 0,
       "source": "local-tarball",
       "dependencies": {
