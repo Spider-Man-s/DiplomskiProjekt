@@ -2,46 +2,35 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using Photon.Pun;
+using Photon.Realtime;  
 using ExitGames.Client.Photon;
-using Photon.Realtime;
 
 public class ActivateFire : MonoBehaviour
 {
     [SerializeField] private List<GameObject> flames = new List<GameObject>();
-
     [SerializeField] private Color unselectedColor = Color.green;
     [SerializeField] private Color selectedColor = Color.red;
 
-    private bool[] isSelected;  // pamti koje su točke odabrane
+    private bool[] isSelected;
+
+    private const byte EVENT_FIRE_ACTIVATED = 1;
 
     private void Awake()
     {
         Debug.Log($"[ActivateFire:{name}] Awake, flames.Count = {flames.Count}");
-
         isSelected = new bool[flames.Count];
 
-        // sve točke na početk uključene i zelene
         for (int i = 0; i < flames.Count; i++)
         {
-            if (flames[i] == null)
-            {
-
-                continue;
-            }
+            if (flames[i] == null) continue;
 
             flames[i].SetActive(true);
-
             var img = flames[i].GetComponentInChildren<Image>();
-            if (img != null)
-            {
-                img.color = unselectedColor;
-            }
-
+            if (img != null) img.color = unselectedColor;
         }
     }
 
-
-
+    // OVO TI JE "klik" funkcija - ovdje ćemo i slati poruku kad se upali
     public void ToggleFlame(int flameID)
     {
         int index = flameID - 1;
@@ -63,87 +52,27 @@ public class ActivateFire : MonoBehaviour
 
             Debug.Log($"[ActivateFire:{name}] isSelected[{index}] = {isSelected[index]} za objekt {flames[index].name}");
         }
-        else
+
+        // Ako je nakon klika UPALJENO -> šalji na AR
+        if (isSelected[index])
         {
-            Debug.LogWarning($"[ActivateFire:{name}] flames[{index}] je NULL u ToggleFlame");
+            SendFireActivatedEvent(flameID); // šaljemo flameID (1-based)
         }
     }
 
-    public int[] GetSelectedFireIndices()
+    private void SendFireActivatedEvent(int flameID)
     {
+        // payload kao int (može i object[] ako kasnije dodaš više polja)
+        PhotonNetwork.RaiseEvent(
+            EVENT_FIRE_ACTIVATED,
+            flameID,
+            new RaiseEventOptions { Receivers = ReceiverGroup.Others },
+            SendOptions.SendReliable
+        );
 
-        string bits = "";
-        for (int i = 0; i < isSelected.Length; i++)
-            bits += isSelected[i] ? "1" : "0";
-
-
-        List<int> selected = new List<int>();
-
-        for (int i = 0; i < isSelected.Length; i++)
-            if (isSelected[i])
-                selected.Add(i + 1);
-
-        return selected.ToArray();
+        Debug.Log($"[ActivateFire:{name}] Sent event: upalila se vatra {flameID}");
     }
 
-    private const byte EVENT_FIRE_ACTIVATED = 1;
-
-    /*
-        public void ActivateFlame(int flameID)
-        {
-            if (flames[flameID - 1] != null)
-            {
-                flames[flameID - 1].SetActive(true);
-
-                string message = $"upaljen je po�ar broj {flameID}";
-                var raiseOptions = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
-                PhotonNetwork.RaiseEvent(
-                    EVENT_FIRE_ACTIVATED,
-                    message,
-                    raiseOptions,
-                    SendOptions.SendReliable
-                );
-            }
-        }
-
-        public void DeActivateFlame(int flameID)
-        {
-            if (flames[flameID - 1] != null)
-            {
-                flames[flameID - 1].SetActive(false);
-            }
-        }
-
-        public void ActivateFlame(int flameID)
-        {
-            int index = flameID - 1;
-            Debug.Log($"[ActivateFire:{name}] ActivateFlame flameID={flameID}, index={index}");
-
-            if (index < 0 || index >= flames.Count)
-            {
-                Debug.LogWarning($"[ActivateFire:{name}] ActivateFlame index izvan rangea: {index}");
-                return;
-            }
-
-            if (flames[index] != null)
-                flames[index].SetActive(true);
-        }
-
-        public void DeActivateFlame(int flameID)
-        {
-            int index = flameID - 1;
-            Debug.Log($"[ActivateFire:{name}] DeActivateFlame flameID={flameID}, index={index}");
-
-            if (index < 0 || index >= flames.Count)
-            {
-                Debug.LogWarning($"[ActivateFire:{name}] DeActivateFlame index izvan rangea: {index}");
-                return;
-            }
-
-            if (flames[index] != null)
-                flames[index].SetActive(false);
-        }
-        */
     public void ActivateFlame(int flameID)
     {
         int index = flameID - 1;
@@ -186,5 +115,21 @@ public class ActivateFire : MonoBehaviour
             flames[index].SetActive(false);
             Debug.Log($"[ActivateFire:{name}] Fire {flameID} deactivated.");
         }
+    }
+    public int[] GetSelectedFireIndices()
+    {
+
+        string bits = "";
+        for (int i = 0; i < isSelected.Length; i++)
+            bits += isSelected[i] ? "1" : "0";
+
+
+        List<int> selected = new List<int>();
+
+        for (int i = 0; i < isSelected.Length; i++)
+            if (isSelected[i])
+                selected.Add(i + 1);
+
+        return selected.ToArray();
     }
 }

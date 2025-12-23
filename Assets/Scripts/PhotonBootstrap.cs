@@ -1,37 +1,49 @@
-using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using UnityEngine;
 
-public class PhotonBootstrap : MonoBehaviourPunCallbacks
+public class NetworkBootstrap : MonoBehaviourPunCallbacks
 {
-    [SerializeField] private string roomName = "GoriGoraGoriBorovina"; 
+    public static NetworkBootstrap Instance;
 
-    private void Start()
+    [SerializeField] string roomName = "GoriGoraGoriBorovina";
+
+    void Awake()
     {
+        if (Instance != null) { Destroy(gameObject); return; }
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
+
+    void Start()
+    {
+        Debug.Log("Bootstrap Start. Connecting...");
+        PhotonNetwork.AutomaticallySyncScene = false;
+
         if (!PhotonNetwork.IsConnected)
-        {
-            PhotonNetwork.AutomaticallySyncScene = false; 
             PhotonNetwork.ConnectUsingSettings();
-        }
         else
-        {
-            JoinRoom();
-        }
+            Debug.Log("Already connected.");
     }
 
     public override void OnConnectedToMaster()
     {
-        JoinRoom();
-    }
-
-    private void JoinRoom()
-    {
-        var roomOptions = new RoomOptions { MaxPlayers = 10 };
-        PhotonNetwork.JoinOrCreateRoom(roomName, roomOptions, TypedLobby.Default);
+        Debug.Log("ConnectedToMaster. Joining room...");
+        PhotonNetwork.JoinOrCreateRoom(roomName, new RoomOptions { MaxPlayers = 2 }, TypedLobby.Default);
     }
 
     public override void OnJoinedRoom()
     {
-        Debug.Log("Joined Photon room: " + roomName);
+        Debug.Log($"OnJoinedRoom: {PhotonNetwork.CurrentRoom.Name} count={PhotonNetwork.CurrentRoom.PlayerCount}");
+    }
+
+    public override void OnJoinRoomFailed(short returnCode, string message)
+    {
+        Debug.LogError($"OnJoinRoomFailed {returnCode} {message}");
+    }
+
+    public override void OnDisconnected(Photon.Realtime.DisconnectCause cause)
+    {
+        Debug.LogError($"Disconnected: {cause}");
     }
 }
