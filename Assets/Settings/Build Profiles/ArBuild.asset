@@ -23,9 +23,11 @@ MonoBehaviour:
   - m_enabled: 0
     m_path: Assets/Samples/XERAL XR Plugin/3.0.0-pre.4/Interaction Basics/HelloMR/HelloMR.unity
   - m_enabled: 1
-    m_path: Assets/Scenes/AR/ARScene.unity
+    m_path: Assets/_Scenes/AR/ARScene.unity
   - m_enabled: 0
     m_path: Assets/Samples/XERAL XR Plugin/3.0.0-pre.4/Interaction Basics/RayLaser/XREALLaser.unity
+  - m_enabled: 1
+    m_path: Assets/_Scenes/PC/SimulationOverview.unity
   m_ScriptingDefines: []
   m_PlayerSettingsYaml:
     m_Settings:

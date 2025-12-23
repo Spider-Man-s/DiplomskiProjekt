@@ -6,28 +6,28 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/PC/TitleScreen.unity
+    path: Assets/_Scenes/PC/TitleScreen.unity
     guid: fa1b44ae04d2b6c41a2c77b71cf67de9
   - enabled: 0
-    path: Assets/Scenes/Practice/PCScene.unity
+    path: Assets/_Scenes/Practice/PCScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
-    path: Assets/Scenes/PC/MainMenu.unity
+    path: Assets/_Scenes/PC/MainMenu.unity
     guid: d61941864d3918c4bb1428f1abc4c361
   - enabled: 1
-    path: Assets/Scenes/PC/PreviewScene.unity
+    path: Assets/_Scenes/PC/PreviewScene.unity
     guid: bb137a06906d15c43a56083ff6458d5a
   - enabled: 1
-    path: Assets/Scenes/PC/SimulationMenu.unity
+    path: Assets/_Scenes/PC/SimulationMenu.unity
     guid: 79d83a4180903ce47ad91c3f9b6667a3
   - enabled: 1
-    path: Assets/Scenes/AR/ARScene_PC_Test.unity
+    path: Assets/_Scenes/AR/ARScene_PC_Test.unity
     guid: ddfa9688ac70b6848a9ffe78229ed6c9
   - enabled: 1
-    path: Assets/Scenes/PC/SimulationOverview.unity
+    path: Assets/_Scenes/PC/SimulationOverview.unity
     guid: a10ab969d2cf18e4fac03fea4c2d3baf
   - enabled: 1
-    path: Assets/Scenes/PC/SimulationReport.unity
+    path: Assets/_Scenes/PC/SimulationReport.unity
     guid: 4a2cac84d333c854f954050a96de50b2
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}

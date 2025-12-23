@@ -6,7 +6,12 @@ public class NetworkBootstrap : MonoBehaviourPunCallbacks
 {
     public static NetworkBootstrap Instance;
 
+    [Header("Room Settings")]
     [SerializeField] string roomName = "GoriGoraGoriBorovina";
+
+    [Header("Scene Names")]
+    [SerializeField] string arSceneName = "ARScene";
+    [SerializeField] string pcMapSceneName = "PCScene";
 
     void Awake()
     {
@@ -45,5 +50,14 @@ public class NetworkBootstrap : MonoBehaviourPunCallbacks
     public override void OnDisconnected(Photon.Realtime.DisconnectCause cause)
     {
         Debug.LogError($"Disconnected: {cause}");
+    }
+    public void LoadARScene()
+    {
+        PhotonNetwork.LoadLevel(arSceneName);
+    }
+
+    public void LoadPCMapScene()
+    {
+        PhotonNetwork.LoadLevel(pcMapSceneName);
     }
 }
