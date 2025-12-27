@@ -589,7 +589,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 253654584}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 1.5}
   m_LocalScale: {x: 0.001, y: 0.001, z: 0.001}
   m_ConstrainProportionsScale: 0
@@ -597,7 +597,7 @@ RectTransform:
   - {fileID: 1792718969}
   - {fileID: 1922603503}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0.764, y: 1.3737}
@@ -1264,6 +1264,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roomName: GoriGoraGoriBorovina
+  arSceneName: ARScene
+  pcMapSceneName: PCScene
 --- !u!4 &403774302
 Transform:
   m_ObjectHideFlags: 0
@@ -5572,19 +5574,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3063281652878360781, guid: 3182b5074a6bf3d4887a44a38cbb9cb6, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7246618
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3063281652878360781, guid: 3182b5074a6bf3d4887a44a38cbb9cb6, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3063281652878360781, guid: 3182b5074a6bf3d4887a44a38cbb9cb6, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.6891047
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3063281652878360781, guid: 3182b5074a6bf3d4887a44a38cbb9cb6, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3063281652878360781, guid: 3182b5074a6bf3d4887a44a38cbb9cb6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -5592,7 +5594,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3063281652878360781, guid: 3182b5074a6bf3d4887a44a38cbb9cb6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 87.119
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3063281652878360781, guid: 3182b5074a6bf3d4887a44a38cbb9cb6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -5613,11 +5615,14 @@ PrefabInstance:
       addedObject: {fileID: 1211306542}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 9011500862288746607, guid: 3182b5074a6bf3d4887a44a38cbb9cb6, type: 3}
+      insertIndex: 1
+      addedObject: {fileID: 2130253569}
+    - targetCorrespondingSourceObject: {fileID: 9011500862288746607, guid: 3182b5074a6bf3d4887a44a38cbb9cb6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2130253570}
     - targetCorrespondingSourceObject: {fileID: 9011500862288746607, guid: 3182b5074a6bf3d4887a44a38cbb9cb6, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2130253569}
+      addedObject: {fileID: 2130253571}
   m_SourcePrefab: {fileID: 100100000, guid: 3182b5074a6bf3d4887a44a38cbb9cb6, type: 3}
 --- !u!1001 &1781802852
 PrefabInstance:
@@ -5700,6 +5705,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c60bc420e9b36e04bb67a10a4f172e98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pcSceneName: PCScene
+  arSceneName: ARScene
 --- !u!1 &1792718968
 GameObject:
   m_ObjectHideFlags: 0
@@ -6571,7 +6578,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e80e43af1486eb846bca59d0a56b5ee3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sendRate: 0.1
+  sendRate: 1
+  debugText: {fileID: 1438537094}
 --- !u!114 &2130253570
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6616,6 +6624,28 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!114 &2130253571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2130253564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 2
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1001 &2144398289
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6949,7 +6979,6 @@ SceneRoots:
   - {fileID: 3952582203268095765}
   - {fileID: 826851281}
   - {fileID: 1854345183}
-  - {fileID: 403774302}
   - {fileID: 703531638}
   - {fileID: 1075658915}
   - {fileID: 1350187809}
@@ -6957,4 +6986,5 @@ SceneRoots:
   - {fileID: 1775807878}
   - {fileID: 2144398289}
   - {fileID: 1899148045}
+  - {fileID: 403774302}
   - {fileID: 1781802852}

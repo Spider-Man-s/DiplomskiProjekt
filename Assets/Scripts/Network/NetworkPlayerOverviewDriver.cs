@@ -2,51 +2,41 @@ using UnityEngine;
 using Photon.Pun;
 using ExitGames.Client.Photon;
 using Photon.Realtime;
+
+[System.Serializable]
+public class HouseTrackingData
+{
+    public string houseName;
+
+    [Header("UI References")]
+    public RectTransform houseRoot;      // House UI panel
+    public RectTransform playerIcon;     // Player icon on map
+    public RectTransform spawnAnchor;    // Red circle anchor
+
+    [Header("World Bounds for AR space")]
+    public float worldMinX;
+    public float worldMaxX;
+    public float worldMinZ;
+    public float worldMaxZ;
+}
 public class NetworkPlayerOverviewDriver : MonoBehaviour, IOnEventCallback
 {
-    /*
-    [SerializeField] private OverviewManager overview;
-
-    [Header("World bounds of the AR play area")]
-    public Vector2 worldMin = new Vector2(-5f, -5f);   // X , Z
-    public Vector2 worldMax = new Vector2(5f, 5f);
+    [Header("Houses UI + Bounds Config")]
+    public HouseTrackingData[] houses;
 
     [Header("Smoothing")]
-    public float smooth = 8f;
-
-    private Vector2 currentPos;
-    private float currentRot;
-
-    void Update()
-    {
-        if (overview == null) return;
-
-        Vector3 worldPos = PlayerNetworkState.Position;
-        float rotY = PlayerNetworkState.RotationY;
-
-        // --- 1) Convert WORLD → NORMALIZED 0..1 ---
-        float nx = Mathf.InverseLerp(worldMin.x, worldMax.x, worldPos.x);
-        float nz = Mathf.InverseLerp(worldMin.y, worldMax.y, worldPos.z);
-
-        // Clamp to prevent icon leaving map
-        nx = Mathf.Clamp01(nx);
-        nz = Mathf.Clamp01(nz);
-
-        // --- 2) Smooth icon movement ---
-        Vector2 target = new Vector2(nx, nz);
-        currentPos = Vector2.Lerp(currentPos, target, Time.deltaTime * smooth);
-
-        // --- 3) Apply to UI ---
-        overview.SetPlayerIconNormalizedPosition(currentPos);
-
-        // Convert world Y rotation → UI rotation
-        float targetRot = -rotY; // UI rotates opposite direction
-        currentRot = Mathf.LerpAngle(currentRot, targetRot, Time.deltaTime * smooth);
-        overview.SetPlayerIconRotation(currentRot);
-    }
-    */
+    public float moveSmooth = 10f;
+    public float rotateSmooth = 10f;
 
     const byte POSITION_EVENT = 10;
+
+    Vector2 currentUIPos;
+    float currentRot;
+
+    int activeHouse = 0;
+    bool hasData = false;
+    Vector3 lastWorldPos;
+    float lastRotY;
 
     void OnEnable() => PhotonNetwork.AddCallbackTarget(this);
     void OnDisable() => PhotonNetwork.RemoveCallbackTarget(this);
@@ -57,12 +47,65 @@ public class NetworkPlayerOverviewDriver : MonoBehaviour, IOnEventCallback
 
         object[] data = (object[])photonEvent.CustomData;
 
-        Vector3 pos = new Vector3((float)data[0], (float)data[1], (float)data[2]);
+        Vector3 pos = new Vector3(
+            (float)data[0],
+            (float)data[1],
+            (float)data[2]
+        );
+
         float rotY = (float)data[3];
 
-        PlayerNetworkState.Position = pos;
-        PlayerNetworkState.RotationY = rotY;
-        PlayerNetworkState.HasData = true;
-        Debug.Log($"[PC Scene] Received coords: {pos} RotY: {rotY}");
+        activeHouse = (int)data[4];   // <-- YOU SEND THIS FROM AR
+
+        lastWorldPos = pos;
+        lastRotY = rotY;
+        hasData = true;
+
+        Debug.Log($"PC received: Pos={pos} Rot={rotY} House={activeHouse}");
+    }
+
+    void Update()
+    {
+        if (!hasData) return;
+        if (activeHouse < 0 || activeHouse >= houses.Length) return;
+
+        var h = houses[activeHouse];
+        if (h.houseRoot == null || h.playerIcon == null || h.spawnAnchor == null)
+            return;
+
+        MovePlayerIcon(h);
+        RotatePlayerIcon(h);
+    }
+
+    void MovePlayerIcon(HouseTrackingData h)
+    {
+        RectTransform mapRect = h.houseRoot;
+        Rect r = mapRect.rect;
+
+        // --- IMPORTANT: SWAP + INVERT ---
+        // World Z → UI X (inverted because forward should move left)
+        float zNorm = Mathf.InverseLerp(h.worldMinZ, h.worldMaxZ, lastWorldPos.z);
+        float nx = 1f - Mathf.Clamp01(zNorm);
+
+        // World X → UI Y (normal)
+        float xNorm = Mathf.InverseLerp(h.worldMinX, h.worldMaxX, lastWorldPos.x);
+        float ny = Mathf.Clamp01(xNorm);
+
+        Vector2 localPos = new Vector2(
+            Mathf.Lerp(-r.width / 2f, r.width / 2f, nx),
+            Mathf.Lerp(-r.height / 2f, r.height / 2f, ny)
+        );
+
+        currentUIPos = Vector2.Lerp(currentUIPos, localPos, Time.deltaTime * moveSmooth);
+        h.playerIcon.anchoredPosition = currentUIPos;
+    }
+
+    void RotatePlayerIcon(HouseTrackingData h)
+    {
+        // Opposite rotation + starting offset of 90 degrees
+        float target = -lastRotY + 90f;
+
+        currentRot = Mathf.LerpAngle(currentRot, target, Time.deltaTime * rotateSmooth);
+        h.playerIcon.localEulerAngles = new Vector3(0, 0, currentRot);
     }
 }
