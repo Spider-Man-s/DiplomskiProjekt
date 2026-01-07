@@ -4,7 +4,7 @@ using Photon.Pun;
 using ExitGames.Client.Photon;
 using Photon.Realtime;
 
-public class PlayerCoordinates : MonoBehaviourPun
+public class PlayerCoordinates : MonoBehaviourPunCallbacks
 {
 
     const byte POSITION_EVENT = 10;
@@ -13,11 +13,12 @@ public class PlayerCoordinates : MonoBehaviourPun
     [SerializeField] TMP_Text debugText;
 
     float timer;
-
+    bool roomReady = false;
     void Update()
     {
         if (!PhotonNetwork.InRoom) return;
-        if (!photonView.IsMine) return;
+        if (!roomReady) return;
+        //if (!photonView.IsMine) return;
 
         timer += Time.deltaTime;
         if (timer < 1f / sendRate) return;
@@ -47,4 +48,23 @@ public class PlayerCoordinates : MonoBehaviourPun
 
         Debug.Log($"[AR Sim] Sent coords: {p} RotY: {y}");
     }
+
+    public override void OnJoinedRoom()
+    {
+        if (PhotonNetwork.CurrentRoom.PlayerCount >= 2)
+        {
+            roomReady = true;
+            Debug.Log("[AR_COORD] Room ready (joined second)");
+        }
+    }
+
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        if (PhotonNetwork.CurrentRoom.PlayerCount >= 2)
+        {
+            roomReady = true;
+            Debug.Log("[AR_COORD] Room ready (player entered)");
+        }
+    }
+
 }

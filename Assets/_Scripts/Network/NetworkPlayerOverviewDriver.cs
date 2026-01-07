@@ -9,9 +9,9 @@ public class HouseTrackingData
     public string houseName;
 
     [Header("UI References")]
-    public RectTransform houseRoot;      // House UI panel
-    public RectTransform playerIcon;     // Player icon on map
-    public RectTransform spawnAnchor;    // Red circle anchor
+    public RectTransform houseRoot;
+    public RectTransform playerIcon;
+    public RectTransform spawnAnchor;
 
     [Header("World Bounds for AR space")]
     public float worldMinX;
@@ -55,7 +55,7 @@ public class NetworkPlayerOverviewDriver : MonoBehaviour, IOnEventCallback
 
         float rotY = (float)data[3];
 
-        activeHouse = (int)data[4];   // <-- YOU SEND THIS FROM AR
+        activeHouse = (int)data[4];
 
         lastWorldPos = pos;
         lastRotY = rotY;
@@ -82,12 +82,10 @@ public class NetworkPlayerOverviewDriver : MonoBehaviour, IOnEventCallback
         RectTransform mapRect = h.houseRoot;
         Rect r = mapRect.rect;
 
-        // --- IMPORTANT: SWAP + INVERT ---
-        // World Z → UI X (inverted because forward should move left)
         float zNorm = Mathf.InverseLerp(h.worldMinZ, h.worldMaxZ, lastWorldPos.z);
         float nx = 1f - Mathf.Clamp01(zNorm);
 
-        // World X → UI Y (normal)
+
         float xNorm = Mathf.InverseLerp(h.worldMinX, h.worldMaxX, lastWorldPos.x);
         float ny = Mathf.Clamp01(xNorm);
 
@@ -102,7 +100,7 @@ public class NetworkPlayerOverviewDriver : MonoBehaviour, IOnEventCallback
 
     void RotatePlayerIcon(HouseTrackingData h)
     {
-        // Opposite rotation + starting offset of 90 degrees
+
         float target = -lastRotY + 90f;
 
         currentRot = Mathf.LerpAngle(currentRot, target, Time.deltaTime * rotateSmooth);

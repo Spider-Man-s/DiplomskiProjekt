@@ -129,6 +129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 36507355}
   - component: {fileID: 36507356}
+  - component: {fileID: 36507357}
   m_Layer: 0
   m_Name: HandshakeController
   m_TagString: Untagged
@@ -167,6 +168,19 @@ MonoBehaviour:
   waitingStatusText: {fileID: 1638802544}
   menuSceneName: SimulationMenu
   overviewSceneName: SimulationOverview
+--- !u!114 &36507357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 36507353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79fd2221ec9605346b6d5eaadfe253d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 36507356}
 --- !u!1 &215757025
 GameObject:
   m_ObjectHideFlags: 0

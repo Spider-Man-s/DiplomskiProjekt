@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class HandshakeRPC : MonoBehaviourPunCallbacks
 {
+    /*
     bool helloSent = false;
 
     [Header("Scene Names (set in Inspector or via NetworkBootstrap)")]
@@ -45,4 +46,5 @@ public class HandshakeRPC : MonoBehaviourPunCallbacks
             Debug.Log($"[{pcSceneName}] Handshake complete!");
         }
     }
+    */
 }
