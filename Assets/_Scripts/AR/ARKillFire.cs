@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 public class ARKillFire : MonoBehaviour
 {
     public InputActionReference rightTriggerAction;
+    [SerializeField] InputActionReference debugKeyboardAction;
     public float checkRadius = 2.0f;
 
     private void OnEnable()
@@ -18,8 +19,10 @@ public class ARKillFire : MonoBehaviour
 
     void Update()
     {
-        if (rightTriggerAction.action.ReadValue<float>() > 0.1f)
+        if (rightTriggerAction.action.ReadValue<float>() > 0.1f
+            || debugKeyboardAction.action.IsPressed())
         {
+            Debug.Log("[AR] Debug kill fire key pressed");
             ExtinguishNearbyFire();
         }
     }
@@ -29,7 +32,7 @@ public class ARKillFire : MonoBehaviour
         Fire[] fires = FindObjectsOfType<Fire>();
 
         Fire closestFire = null;
-        float closestDistance = float.MaxValue;
+        float closestDist = float.MaxValue;
 
         Vector3 pos = transform.position;
 
@@ -37,17 +40,20 @@ public class ARKillFire : MonoBehaviour
         {
             if (!fire.gameObject.activeInHierarchy) continue;
 
-            float distance = Vector3.Distance(pos, fire.transform.position);
-            if (distance <= checkRadius && distance < closestDistance)
+            float d = Vector3.Distance(pos, fire.transform.position);
+            if (d <= checkRadius && d < closestDist)
             {
                 closestFire = fire;
-                closestDistance = distance;
+                closestDist = d;
             }
         }
 
-        if (closestFire != null)
-        {
-            closestFire.ApplyExtinguish(Time.deltaTime);
-        }
+        if (closestFire == null)
+            return;
+
+        FireZone zone = closestFire.GetComponentInParent<FireZone>();
+        if (zone == null) return;
+
+        zone.ApplyExtinguish(pos, Time.deltaTime);
     }
 }

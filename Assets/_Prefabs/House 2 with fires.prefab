@@ -9,13 +9,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3971740224237701852}
+  - component: {fileID: 2843855394487536850}
   m_Layer: 0
   m_Name: Bed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3971740224237701852
 Transform:
   m_ObjectHideFlags: 0
@@ -32,6 +33,21 @@ Transform:
   - {fileID: 5469299617046708037}
   m_Father: {fileID: 1577910425391072598}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2843855394487536850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 488945253728138311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15d10919bde666746bc05c343166132e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fireId: 4
+  fireVisuals:
+  - {fileID: 8118839534197673372}
 --- !u!1 &672253827683578034
 GameObject:
   m_ObjectHideFlags: 0
@@ -41,13 +57,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2971134604956476019}
+  - component: {fileID: 8437529130094252941}
   m_Layer: 0
   m_Name: Chimney
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2971134604956476019
 Transform:
   m_ObjectHideFlags: 0
@@ -64,6 +81,21 @@ Transform:
   - {fileID: 9217428330413155919}
   m_Father: {fileID: 1577910425391072598}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8437529130094252941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 672253827683578034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15d10919bde666746bc05c343166132e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fireId: 7
+  fireVisuals:
+  - {fileID: 4684068571974562461}
 --- !u!1 &1710406656441788187
 GameObject:
   m_ObjectHideFlags: 0
@@ -73,13 +105,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1127507701321151703}
+  - component: {fileID: 9002687842649597644}
   m_Layer: 0
   m_Name: Tv
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1127507701321151703
 Transform:
   m_ObjectHideFlags: 0
@@ -96,6 +129,21 @@ Transform:
   - {fileID: 3371248337490742915}
   m_Father: {fileID: 1577910425391072598}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9002687842649597644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1710406656441788187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15d10919bde666746bc05c343166132e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fireId: 3
+  fireVisuals:
+  - {fileID: 442337866944379729}
 --- !u!1 &3159429967269232833
 GameObject:
   m_ObjectHideFlags: 0
@@ -105,13 +153,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 911241860447308962}
+  - component: {fileID: 1484203506423733570}
   m_Layer: 0
   m_Name: Closet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &911241860447308962
 Transform:
   m_ObjectHideFlags: 0
@@ -128,6 +177,21 @@ Transform:
   - {fileID: 7510265727859972767}
   m_Father: {fileID: 1577910425391072598}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1484203506423733570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3159429967269232833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15d10919bde666746bc05c343166132e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fireId: 6
+  fireVisuals:
+  - {fileID: 7909502329784812168}
 --- !u!1 &6149558437505988611
 GameObject:
   m_ObjectHideFlags: 0
@@ -137,6 +201,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6059580397440578084}
+  - component: {fileID: 1664609064625520260}
   m_Layer: 0
   m_Name: House 2 with fires
   m_TagString: Untagged
@@ -161,6 +226,26 @@ Transform:
   - {fileID: 1577910425391072598}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1664609064625520260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6149558437505988611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70a17e6bd6a35224f9aa91a728d04dfd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fireZones:
+  - {fileID: 4200487889614192056}
+  - {fileID: 1367248103577908429}
+  - {fileID: 9002687842649597644}
+  - {fileID: 2843855394487536850}
+  - {fileID: 199074670475238430}
+  - {fileID: 1484203506423733570}
+  - {fileID: 8437529130094252941}
 --- !u!1 &7232111673710726177
 GameObject:
   m_ObjectHideFlags: 0
@@ -208,13 +293,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7132166311876676293}
+  - component: {fileID: 4200487889614192056}
   m_Layer: 0
   m_Name: Kitchen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7132166311876676293
 Transform:
   m_ObjectHideFlags: 0
@@ -231,6 +317,21 @@ Transform:
   - {fileID: 4176188822732879285}
   m_Father: {fileID: 1577910425391072598}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4200487889614192056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8142183857761618414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15d10919bde666746bc05c343166132e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fireId: 1
+  fireVisuals:
+  - {fileID: 7400026231274053958}
 --- !u!1 &8681353926537077880
 GameObject:
   m_ObjectHideFlags: 0
@@ -240,13 +341,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3416556647238554002}
+  - component: {fileID: 1367248103577908429}
   m_Layer: 0
   m_Name: BathFire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3416556647238554002
 Transform:
   m_ObjectHideFlags: 0
@@ -264,6 +366,22 @@ Transform:
   - {fileID: 474102635548356289}
   m_Father: {fileID: 1577910425391072598}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1367248103577908429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8681353926537077880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15d10919bde666746bc05c343166132e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fireId: 2
+  fireVisuals:
+  - {fileID: 5060321259395735898}
+  - {fileID: 6994543519848475370}
 --- !u!1 &8794083659140810228
 GameObject:
   m_ObjectHideFlags: 0
@@ -273,13 +391,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3871592510622519680}
+  - component: {fileID: 199074670475238430}
   m_Layer: 0
   m_Name: Cabinet Bedroom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3871592510622519680
 Transform:
   m_ObjectHideFlags: 0
@@ -296,6 +415,21 @@ Transform:
   - {fileID: 315414492039619472}
   m_Father: {fileID: 1577910425391072598}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &199074670475238430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8794083659140810228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15d10919bde666746bc05c343166132e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fireId: 5
+  fireVisuals:
+  - {fileID: 2143315115787067049}
 --- !u!1001 &319375364994445456
 PrefabInstance:
   m_ObjectHideFlags: 0

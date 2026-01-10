@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using Photon.Pun;
-using Photon.Realtime;  
+using Photon.Realtime;
 using ExitGames.Client.Photon;
 
 public class ActivateFire : MonoBehaviour
@@ -50,56 +50,58 @@ public class ActivateFire : MonoBehaviour
             if (img != null)
                 img.color = isSelected[index] ? selectedColor : unselectedColor;
 
-            Debug.Log($"[ActivateFire:{name}] isSelected[{index}] = {isSelected[index]} za objekt {flames[index].name}");
+            // Debug.Log($"[ActivateFire:{name}] isSelected[{index}] = {isSelected[index]} za objekt {flames[index].name}");
         }
 
-        // Ako je nakon klika UPALJENO -> šalji na AR
-        if (isSelected[index])
-        {
-            SendFireActivatedEvent(flameID); // šaljemo flameID (1-based)
-        }
     }
 
-    private void SendFireActivatedEvent(int flameID)
+    public void SendSelectedFiresToAR()
     {
-        // payload kao int (može i object[] ako kasnije dodaš više polja)
-        PhotonNetwork.RaiseEvent(
-            EVENT_FIRE_ACTIVATED,
-            flameID,
-            new RaiseEventOptions { Receivers = ReceiverGroup.Others },
-            SendOptions.SendReliable
-        );
-
-        Debug.Log($"[ActivateFire:{name}] Sent event: upalila se vatra {flameID}");
-    }
-
-    public void ActivateFlame(int flameID)
-    {
-        int index = flameID - 1;
-
-        if (index < 0 || index >= flames.Count)
+        for (int i = 0; i < isSelected.Length; i++)
         {
-            Debug.LogWarning($"[ActivateFire:{name}] ActivateFlame index out of range: {index}");
-            return;
-        }
+            if (!isSelected[i]) continue;
 
-        if (flames[index] != null)
-        {
-            flames[index].SetActive(true);
+            int fireId = i + 1;
 
-            // Send event to others
-            string message = $"upaljen je požar broj {flameID}";
             PhotonNetwork.RaiseEvent(
                 EVENT_FIRE_ACTIVATED,
-                message,
+                fireId,
                 new RaiseEventOptions { Receivers = ReceiverGroup.Others },
                 SendOptions.SendReliable
             );
 
-            Debug.Log($"[ActivateFire:{name}] Fire {flameID} activated + event sent.");
+            Debug.Log($"[PC] Activated fire {fireId}");
         }
     }
 
+    /*
+        public void ActivateFlame(int flameID)
+        {
+            int index = flameID - 1;
+
+            if (index < 0 || index >= flames.Count)
+            {
+                Debug.LogWarning($"[ActivateFire:{name}] ActivateFlame index out of range: {index}");
+                return;
+            }
+
+            if (flames[index] != null)
+            {
+                flames[index].SetActive(true);
+
+                // Send event to others
+                string message = $"upaljen je požar broj {flameID}";
+                PhotonNetwork.RaiseEvent(
+                    EVENT_FIRE_ACTIVATED,
+                    message,
+                    new RaiseEventOptions { Receivers = ReceiverGroup.Others },
+                    SendOptions.SendReliable
+                );
+
+                Debug.Log($"[ActivateFire:{name}] Fire {flameID} activated + event sent.");
+            }
+        }
+    */
     public void DeActivateFlame(int flameID)
     {
         int index = flameID - 1;

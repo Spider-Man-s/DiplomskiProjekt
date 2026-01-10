@@ -8,10 +8,10 @@ public class MainMenuUI : MonoBehaviour
     [System.Serializable]
     public class HouseData
     {
-        public string houseName;          
-        public Sprite thumbnail;          
-        public string previewSceneName;  
-        public string simulationSceneName; 
+        public string houseName;
+        public Sprite thumbnail;
+        public string previewSceneName;
+        public string simulationSceneName;
     }
 
     [Header("UI References")]
@@ -72,12 +72,13 @@ public class MainMenuUI : MonoBehaviour
         if (houses.Length == 0) return;
 
         GameState.SelectedHouseIndex = currentIndex;
+        Debug.Log($"[HouseSELECTION] Selected house {currentIndex}");
 
         string sceneName = houses[currentIndex].simulationSceneName;
         if (!string.IsNullOrEmpty(sceneName))
         {
             SceneManager.LoadScene(sceneName);
         }
-   
+
     }
 }

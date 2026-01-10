@@ -37,7 +37,7 @@ public class PlayerCoordinates : MonoBehaviourPunCallbacks
                 $"Rotation Y: {y.ToString(format)}°";
         }
 
-        object[] data = { p.x, p.y, p.z, y, GameState.SelectedHouseIndex };
+        object[] data = { p.x, p.y, p.z, y };
 
         PhotonNetwork.RaiseEvent(
             POSITION_EVENT,
@@ -46,7 +46,7 @@ public class PlayerCoordinates : MonoBehaviourPunCallbacks
             new SendOptions { Reliability = false }
         );
 
-        Debug.Log($"[AR Sim] Sent coords: {p} RotY: {y}");
+        //  Debug.Log($"[AR Sim] Sent coords: {p} RotY: {y}");
     }
 
     public override void OnJoinedRoom()

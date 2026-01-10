@@ -2,8 +2,10 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 using Photon.Pun;
+using Photon.Realtime;
+using ExitGames.Client.Photon;
 
-public class HandshakeController : MonoBehaviour
+public class HandshakeController : MonoBehaviourPun
 {
     [Header("UI")]
     [SerializeField] private GameObject waitingPanel;
@@ -11,6 +13,9 @@ public class HandshakeController : MonoBehaviour
 
     [Header("Scene Flow")]
     [SerializeField] private string overviewSceneName = "SimulationOverview";
+    const byte HANDSHAKE_DONE_EVENT_H1 = 31;
+    const byte HANDSHAKE_DONE_EVENT_H2 = 32;
+
 
     // Handshake state
     bool isWaiting;
@@ -25,6 +30,7 @@ public class HandshakeController : MonoBehaviour
 
         UpdateWaitingUI();
     }
+
 
     void Update()
     {
@@ -97,6 +103,32 @@ public class HandshakeController : MonoBehaviour
 
         if (arConnected && arAtStart && arReady)
         {
+            FindObjectOfType<ActivateFire>()?.SendSelectedFiresToAR();
+            if (GameState.SelectedHouseIndex == 0)
+            {
+                PhotonNetwork.RaiseEvent(
+                        HANDSHAKE_DONE_EVENT_H1,
+                        null,
+                        new RaiseEventOptions { Receivers = ReceiverGroup.Others },
+                        SendOptions.SendReliable
+                    );
+
+                Debug.Log("[HandshakeController] HANDSHAKE_DONE_EVENT_H1 sent");
+            }
+            else if (GameState.SelectedHouseIndex == 1)
+            {
+                PhotonNetwork.RaiseEvent(
+                        HANDSHAKE_DONE_EVENT_H2,
+                        null,
+                        new RaiseEventOptions { Receivers = ReceiverGroup.Others },
+                        SendOptions.SendReliable
+                    );
+
+                Debug.Log("[HandshakeController] HANDSHAKE_DONE_EVENT_H2 sent");
+            }
+
+            Debug.Log("[HandshakeController] HANDSHAKE_DONE_EVENT sent");
+
             SceneManager.LoadScene(overviewSceneName);
         }
     }

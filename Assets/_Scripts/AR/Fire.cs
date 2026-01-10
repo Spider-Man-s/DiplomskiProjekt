@@ -40,12 +40,5 @@ public class Fire : MonoBehaviour
     {
         isExtinguished = true;
         gameObject.SetActive(false);
-        OnFireExtinguished();
-    }
-
-    protected virtual void OnFireExtinguished()
-    {
-
-        Debug.Log($"{name} extinguished.");
     }
 }
