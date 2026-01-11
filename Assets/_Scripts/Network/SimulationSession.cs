@@ -32,6 +32,11 @@ public class SimulationSession :
     bool arReady;
     bool pcWaiting;
     int selectedHouseIndex = -1;
+    int totalFires;
+    int extinguishedFires;
+    float simulationStartTime;
+
+
 
     public bool ARConnected =>
         PhotonNetwork.InRoom &&
@@ -124,6 +129,7 @@ public class SimulationSession :
         Debug.Log("[SimSession] HANDSHAKE COMPLETE");
 
         Phase = SimulationPhase.Running;
+        simulationStartTime = Time.time;
 
         var activateFire = FindObjectOfType<ActivateFire>();
         if (activateFire != null)
@@ -144,11 +150,68 @@ public class SimulationSession :
         );
     }
 
-    // ===================== DISCONNECT =====================
-
-    public override void OnPlayerLeftRoom(Player otherPlayer)
+    public void RegisterFireCount(int count)
     {
-        Debug.Log("[SimSession] Player disconnected");
+        totalFires = count;
+        extinguishedFires = 0;
+        Debug.Log($"[SimSession] Registered {count} fires");
+    }
+
+    public void NotifyFireExtinguished()
+    {
+        if (Phase != SimulationPhase.Running) return;
+
+        extinguishedFires++;
+        Debug.Log($"[SimSession] Fire extinguished {extinguishedFires}/{totalFires}");
+
+        TryEndSimulation();
+    }
+    void TryEndSimulation()
+    {
+        if (Phase != SimulationPhase.Running)
+            return;
+
+        if (extinguishedFires >= totalFires && totalFires > 0)
+        {
+            Debug.Log("[SimSession] All fires extinguished");
+            CompleteSimulation();
+        }
+    }
+    void CompleteSimulation()
+    {
+        Phase = SimulationPhase.Resetting;
+        SimulationResults.TotalFires = totalFires;
+        SimulationResults.ExtinguishedFires = extinguishedFires;
+        SimulationResults.DurationSeconds = Time.time - simulationStartTime;
+
+        SimulationResults.ARDisconnected = false;
+
+        Debug.Log("[SimSession] Broadcasting SIMULATION_END");
+
+        PhotonNetwork.RaiseEvent(
+            SimEvents.SIMULATION_END,
+            null,
+            new RaiseEventOptions { Receivers = ReceiverGroup.All },
+            SendOptions.SendReliable
+        );
+        if (PhotonNetwork.IsMasterClient)
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene("SimulationReport");
+        }
+    }
+
+    public void RequestEndSimulation()
+    {
+        if (Phase != SimulationPhase.Running)
+            return;
+
+        Debug.Log("[SimSession] End requested by PC");
+        CompleteSimulation();
+    }
+
+    public void RequestRestartSimulation()
+    {
+        Debug.Log("[SimSession] Restart requested");
 
         Phase = SimulationPhase.Resetting;
 
@@ -158,5 +221,51 @@ public class SimulationSession :
             new RaiseEventOptions { Receivers = ReceiverGroup.All },
             SendOptions.SendReliable
         );
+        if (PhotonNetwork.IsMasterClient)
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene("SimulationMenu");
+        }
+
+        ResetLocalState();
     }
+    void ResetLocalState()
+    {
+        arAtStart = false;
+        arReady = false;
+        pcWaiting = false;
+        selectedHouseIndex = -1;
+        totalFires = 0;
+        extinguishedFires = 0;
+
+        Phase = SimulationPhase.Idle;
+
+        Debug.Log("[SimSession] Local state reset");
+    }
+
+    // ===================== DISCONNECT =====================
+
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        Debug.Log("[SimSession] Player disconnected");
+
+        SimulationResults.TotalFires = totalFires;
+        SimulationResults.ExtinguishedFires = extinguishedFires;
+        SimulationResults.DurationSeconds = Time.time - simulationStartTime;
+        SimulationResults.ARDisconnected = true;
+
+        Phase = SimulationPhase.Resetting;
+
+        PhotonNetwork.RaiseEvent(
+            SimEvents.SIMULATION_END,
+            null,
+            new RaiseEventOptions { Receivers = ReceiverGroup.All },
+            SendOptions.SendReliable
+        );
+
+        if (PhotonNetwork.IsMasterClient) //samo pc ce loadati scenu
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene("SimulationReport");
+        }
+    }
+
 }

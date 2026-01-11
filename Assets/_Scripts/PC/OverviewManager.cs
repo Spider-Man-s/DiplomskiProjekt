@@ -151,6 +151,10 @@ public class OverviewManager : MonoBehaviour
                 Debug.LogWarning($"[OverviewManager] Fire ID={id} -> index={index} izvan rangea ili ikona NULL.");
             }
         }
+        if (SimulationSession.Instance != null)
+        {
+            SimulationSession.Instance.RegisterFireCount(totalFires);
+        }
 
         // Debug.Log($"[OverviewManager] Ukupno aktivnih požara: {totalFires}");
         UpdateCounterText();
@@ -203,10 +207,11 @@ public class OverviewManager : MonoBehaviour
             UpdateCounterText();
         }
 
-        if (extinguishedFires == totalFires && totalFires > 0)
+        if (SimulationSession.Instance != null)
         {
-            FinishSimulationAndShowReport();
+            SimulationSession.Instance.NotifyFireExtinguished();
         }
+
 
     }
 
@@ -244,7 +249,7 @@ public class OverviewManager : MonoBehaviour
 
     public void ExitSimulation()
     {
-        SceneManager.LoadScene(mainMenuSceneName);
+        SimulationSession.Instance.RequestEndSimulation();
     }
 
     // za pomicanje ikonice igrača po layoutu (0–1 range po x,y)
@@ -279,22 +284,6 @@ public class OverviewManager : MonoBehaviour
 
         // UI rotacija oko Z osi
         playerIcon.localEulerAngles = new Vector3(0f, 0f, angleDegrees);
-    }
-
-    public void FinishSimulationAndShowReport()
-    {
-        // izračun trajanja
-        float duration = Time.time - startTime;
-
-        // spremi rezultate u globalnu klasu
-        SimulationResults.TotalFires = totalFires;
-        SimulationResults.ExtinguishedFires = extinguishedFires;
-        SimulationResults.DurationSeconds = duration;
-
-        Debug.Log($"[OverviewManager] FinishSimulation: {extinguishedFires}/{totalFires}, time={duration}s");
-
-        // učitaj report scenu
-        SceneManager.LoadScene("SimulationReport");
     }
 
 

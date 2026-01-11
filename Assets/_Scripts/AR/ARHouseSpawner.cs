@@ -27,6 +27,11 @@ public class ARHouseSpawner : MonoBehaviour, IOnEventCallback
 
     public void OnEvent(EventData photonEvent)
     {
+        if (photonEvent.Code == SimEvents.SIMULATION_END)
+        {
+            ResetARScene();
+            return;
+        }
         if (photonEvent.Code == SimEvents.FIRE_SELECTION)
         {
             ARSimulationState.SelectedFireIds =
@@ -34,9 +39,10 @@ public class ARHouseSpawner : MonoBehaviour, IOnEventCallback
 
             Debug.Log("[ARHouseSpawner] Cached fire IDs: " +
                 string.Join(",", ARSimulationState.SelectedFireIds));
-
-            if (hasSpawned && spawnedHouse != null)
-                ApplyFireSelection(spawnedHouse);
+            /*
+                        if (hasSpawned && spawnedHouse != null)
+                            ApplyFireSelection(spawnedHouse);
+            */
             return;
         }
 
@@ -101,6 +107,18 @@ public class ARHouseSpawner : MonoBehaviour, IOnEventCallback
                 }
             }
         }
+    }
+    void ResetARScene()
+    {
+        Debug.Log("[AR] Resetting AR scene");
+
+        if (spawnedHouse != null)
+            Destroy(spawnedHouse);
+
+        spawnedHouse = null;
+        hasSpawned = false;
+
+        ARSimulationState.SelectedFireIds = null;
     }
 
 

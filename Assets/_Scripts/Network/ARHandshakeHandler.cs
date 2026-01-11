@@ -4,7 +4,7 @@ using Photon.Realtime;
 using ExitGames.Client.Photon;
 using UnityEngine.UI;
 
-public class ARHandshakeHandler : MonoBehaviour
+public class ARHandshakeHandler : MonoBehaviour, IOnEventCallback
 {
     [Header("References")]
     [SerializeField] StartCircleDetector startDetector;
@@ -20,6 +20,38 @@ public class ARHandshakeHandler : MonoBehaviour
     {
         if (readyButton != null)
             readyButton.onClick.AddListener(OnReadyPressed);
+    }
+
+    void OnEnable()
+    {
+        PhotonNetwork.AddCallbackTarget(this);
+    }
+
+    void OnDisable()
+    {
+        PhotonNetwork.RemoveCallbackTarget(this);
+    }
+
+    public void OnEvent(EventData photonEvent)
+    {
+        if (photonEvent.Code == SimEvents.SIMULATION_END ||
+            photonEvent.Code == SimEvents.SIMULATION_RESET)
+        {
+            ResetHandshake();
+        }
+    }
+
+    void ResetHandshake()
+    {
+        ready = false;
+        hasSentOnce = false;
+        lastSentAtStart = false;
+        lastSentReady = false;
+
+        if (readyButton != null)
+            readyButton.gameObject.SetActive(true);
+
+        Debug.Log("[ARHandshake] Reset");
     }
 
     void Update()

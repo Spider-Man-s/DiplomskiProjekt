@@ -7,20 +7,25 @@ public class SimulationResultsUI : MonoBehaviour
     [Header("UI (TextMeshPro)")]
     [SerializeField] private TMP_Text resultsText;
 
-    private void Start()
+    [Header("Warnings")]
+    [SerializeField] private GameObject arDisconnectedWarning;
+
+    private void OnEnable()
     {
         UpdateResultsUI();
     }
 
     private void UpdateResultsUI()
     {
-        if (resultsText == null)
-            return;
+        if (resultsText == null) return;
 
         resultsText.text =
             $"Ukupno požara: {SimulationResults.TotalFires}\n" +
             $"Ugašeno: {SimulationResults.ExtinguishedFires}\n" +
             $"Vrijeme trajanja: {FormatTime(SimulationResults.DurationSeconds)}";
+
+        if (arDisconnectedWarning != null)
+            arDisconnectedWarning.SetActive(SimulationResults.ARDisconnected);
     }
 
     private string FormatTime(float seconds)
@@ -30,28 +35,15 @@ public class SimulationResultsUI : MonoBehaviour
         return $"{min:00}:{sec:00}";
     }
 
-    // -----------------------------
-    // GUMB: PONOVI SIMULACIJU
-    // -----------------------------
     public void OnReplayButton()
     {
-        // reset rezultata (vizualno i logički čisto)
-        SimulationResults.TotalFires = 0;
-        SimulationResults.ExtinguishedFires = 0;
-        SimulationResults.DurationSeconds = 0f;  // :contentReference[oaicite:0]{index=0}
-
-        // označi da je replay (ali NE diramo SelectedFireIndices)
         GameState.ReplayRequested = true;
-
-        // vrati na SimulationMenu gdje se automatski pokreće handshake
         SceneManager.LoadScene("SimulationMenu");
     }
 
-    // -----------------------------
-    // GUMB: POVRATAK NA MAIN MENU (opcionalno)
-    // -----------------------------
     public void OnBackToMainMenu()
     {
         SceneManager.LoadScene("MainMenu");
     }
 }
+
