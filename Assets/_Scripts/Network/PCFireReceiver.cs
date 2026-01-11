@@ -4,7 +4,6 @@ using ExitGames.Client.Photon;
 using Photon.Realtime;
 public class PCFireReceiver : MonoBehaviour, IOnEventCallback
 {
-    const byte EVENT_FIRE_EXTINGUISHED = 2;
 
     [SerializeField] ActivateFire activateFire;
     [SerializeField] OverviewManager overview;
@@ -14,7 +13,7 @@ public class PCFireReceiver : MonoBehaviour, IOnEventCallback
 
     public void OnEvent(EventData photonEvent)
     {
-        if (photonEvent.Code != EVENT_FIRE_EXTINGUISHED) return;
+        if (photonEvent.Code != SimEvents.EVENT_FIRE_EXTINGUISHED) return;
 
         int fireId = (int)photonEvent.CustomData;
 

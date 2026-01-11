@@ -5,9 +5,6 @@ using Photon.Realtime;
 
 public class ARHouseSpawner : MonoBehaviour, IOnEventCallback
 {
-    const byte HANDSHAKE_DONE_EVENT_H1 = 31;
-    const byte HANDSHAKE_DONE_EVENT_H2 = 32;
-    private const byte EVENT_FIRE_SELECTION = 22;
 
     [Header("House Prefabs")]
     [SerializeField] GameObject[] housePrefabs;
@@ -30,7 +27,7 @@ public class ARHouseSpawner : MonoBehaviour, IOnEventCallback
 
     public void OnEvent(EventData photonEvent)
     {
-        if (photonEvent.Code == EVENT_FIRE_SELECTION)
+        if (photonEvent.Code == SimEvents.FIRE_SELECTION)
         {
             ARSimulationState.SelectedFireIds =
                 (int[])photonEvent.CustomData;
@@ -38,20 +35,17 @@ public class ARHouseSpawner : MonoBehaviour, IOnEventCallback
             Debug.Log("[ARHouseSpawner] Cached fire IDs: " +
                 string.Join(",", ARSimulationState.SelectedFireIds));
 
+            if (hasSpawned && spawnedHouse != null)
+                ApplyFireSelection(spawnedHouse);
             return;
         }
 
-        if (photonEvent.Code != HANDSHAKE_DONE_EVENT_H1 &&
-            photonEvent.Code != HANDSHAKE_DONE_EVENT_H2)
+        if (photonEvent.Code != SimEvents.HANDSHAKE_DONE)
             return;
 
-        if (hasSpawned)
-            return;
-
-        int houseIndex = photonEvent.Code == HANDSHAKE_DONE_EVENT_H1 ? 0 : 1;
-
-        Debug.Log("[ARHouseSpawner] Handshake done event received");
+        int houseIndex = (int)photonEvent.CustomData;
         SpawnSelectedHouse(houseIndex);
+
         hasSpawned = true;
     }
 
@@ -75,6 +69,7 @@ public class ARHouseSpawner : MonoBehaviour, IOnEventCallback
             anchor.position,
             anchor.rotation
         );
+        hasSpawned = true;
 
         ApplyFireSelection(spawnedHouse);
 

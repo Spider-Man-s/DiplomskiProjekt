@@ -13,15 +13,8 @@ public class ActivateFire : MonoBehaviour
     [SerializeField] private Color selectedColor = Color.red;
 
     private bool[] isSelected;
-    private float delayTimer = 3f;
-
-    private const byte EVENT_FIRE_ACTIVATED = 1;
-
-    private const byte EVENT_FIRE_SELECTION = 22;
-
     private void Awake()
     {
-        Debug.Log($"[ActivateFire:{name}] Awake, flames.Count = {flames.Count}");
         isSelected = new bool[flames.Count];
 
         for (int i = 0; i < flames.Count; i++)
@@ -33,8 +26,6 @@ public class ActivateFire : MonoBehaviour
             if (img != null) img.color = unselectedColor;
         }
     }
-
-    // OVO TI JE "klik" funkcija - ovdje ćemo i slati poruku kad se upali
     public void ToggleFlame(int flameID)
     {
         int index = flameID - 1;
@@ -53,60 +44,9 @@ public class ActivateFire : MonoBehaviour
             var img = flames[index].GetComponentInChildren<Image>();
             if (img != null)
                 img.color = isSelected[index] ? selectedColor : unselectedColor;
-
-            // Debug.Log($"[ActivateFire:{name}] isSelected[{index}] = {isSelected[index]} za objekt {flames[index].name}");
         }
 
     }
-
-    public void SendSelectedFiresToAR()
-    {
-        int[] selected = GetSelectedFireIndices();
-
-        PhotonNetwork.RaiseEvent(
-            EVENT_FIRE_SELECTION,
-            selected,
-            new RaiseEventOptions { Receivers = ReceiverGroup.Others },
-            SendOptions.SendReliable
-        );
-
-        Debug.Log($"[PC] Sent fire selection: {string.Join(",", selected)}");
-    }
-
-
-    public IEnumerator DelayforTime(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-    }
-
-    /*
-        public void ActivateFlame(int flameID)
-        {
-            int index = flameID - 1;
-
-            if (index < 0 || index >= flames.Count)
-            {
-                Debug.LogWarning($"[ActivateFire:{name}] ActivateFlame index out of range: {index}");
-                return;
-            }
-
-            if (flames[index] != null)
-            {
-                flames[index].SetActive(true);
-
-                // Send event to others
-                string message = $"upaljen je požar broj {flameID}";
-                PhotonNetwork.RaiseEvent(
-                    EVENT_FIRE_ACTIVATED,
-                    message,
-                    new RaiseEventOptions { Receivers = ReceiverGroup.Others },
-                    SendOptions.SendReliable
-                );
-
-                Debug.Log($"[ActivateFire:{name}] Fire {flameID} activated + event sent.");
-            }
-        }
-    */
     public void DeActivateFlame(int flameID)
     {
         int index = flameID - 1;
@@ -138,5 +78,19 @@ public class ActivateFire : MonoBehaviour
                 selected.Add(i + 1);
 
         return selected.ToArray();
+    }
+
+    public void SendSelectedFiresToAR()
+    {
+        int[] selected = GetSelectedFireIndices();
+
+        PhotonNetwork.RaiseEvent(
+            SimEvents.FIRE_SELECTION,
+            selected,
+            new RaiseEventOptions { Receivers = ReceiverGroup.Others },
+            SendOptions.SendReliable
+        );
+
+        Debug.Log($"[PC] Sent fire selection: {string.Join(",", selected)}");
     }
 }

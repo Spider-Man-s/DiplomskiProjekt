@@ -4,10 +4,8 @@ using Photon.Realtime;
 using ExitGames.Client.Photon;
 using UnityEngine.UI;
 
-public class ARHandshakeHandler : MonoBehaviourPun
+public class ARHandshakeHandler : MonoBehaviour
 {
-    const byte HANDSHAKE_EVENT = 20;
-
     [Header("References")]
     [SerializeField] StartCircleDetector startDetector;
     [SerializeField] Button readyButton;
@@ -26,19 +24,18 @@ public class ARHandshakeHandler : MonoBehaviourPun
 
     void Update()
     {
-        if (!PhotonNetwork.IsConnected) return;
+        if (!PhotonNetwork.InRoom) return;
+        if (startDetector == null) return;
 
         UpdateReadyButtonState();
 
-        if (!PhotonNetwork.InRoom) return;
-        if (!photonView.IsMine) return;
-        if (startDetector == null) return;
+        bool atStart = startDetector.IsAtStart;
 
         if (!hasSentOnce ||
-            startDetector.IsAtStart != lastSentAtStart ||
+            atStart != lastSentAtStart ||
             ready != lastSentReady)
         {
-            SendHandshake();
+            SendStatus(atStart, ready);
         }
     }
 
@@ -46,46 +43,37 @@ public class ARHandshakeHandler : MonoBehaviourPun
     {
         if (readyButton == null) return;
 
-        bool canInteract =
-            PhotonNetwork.IsConnected &&
+        readyButton.interactable =
             PhotonNetwork.InRoom &&
             startDetector != null &&
             startDetector.IsAtStart &&
             !ready;
-
-        readyButton.interactable = canInteract;
     }
 
-
-    void SendHandshake()
+    void SendStatus(bool atStart, bool ready)
     {
-        object[] data =
-        {
-            startDetector.IsAtStart,
-            ready
-        };
-
         PhotonNetwork.RaiseEvent(
-            HANDSHAKE_EVENT,
-            data,
+            SimEvents.AR_STATUS_UPDATE,
+            new object[] { atStart, ready },
             new RaiseEventOptions { Receivers = ReceiverGroup.Others },
-            new SendOptions { Reliability = true }
+            SendOptions.SendUnreliable
         );
 
-        lastSentAtStart = startDetector.IsAtStart;
+        lastSentAtStart = atStart;
         lastSentReady = ready;
         hasSentOnce = true;
 
-        Debug.Log($"[AR] Handshake sent | AtStart={lastSentAtStart} Ready={lastSentReady}");
-        Debug.Log($"[ARHandshake] SEND → AtStart={data[0]}, Ready={data[1]} Room={PhotonNetwork.CurrentRoom?.Name}");
-
+        Debug.Log($"[ARHandshake] STATUS → AtStart={atStart}, Ready={ready}");
     }
 
     public void OnReadyPressed()
     {
         if (ready) return;
+
         ready = true;
-        SendHandshake();
-        readyButton.gameObject.SetActive(false);
+        SendStatus(startDetector.IsAtStart, ready);
+
+        if (readyButton != null)
+            readyButton.gameObject.SetActive(false);
     }
 }

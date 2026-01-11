@@ -43,7 +43,7 @@ public class NetworkPlayerOverviewDriver : MonoBehaviour, IOnEventCallback
     public float moveSmooth = 10f;
     public float rotateSmooth = 10f;
 
-    const byte POSITION_EVENT = 10;
+
 
     Vector2 currentUIPos;
     float currentRot;
@@ -60,7 +60,7 @@ public class NetworkPlayerOverviewDriver : MonoBehaviour, IOnEventCallback
 
     public void OnEvent(EventData photonEvent)
     {
-        if (photonEvent.Code != POSITION_EVENT) return;
+        if (photonEvent.Code != SimEvents.POSITION_EVENT) return;
 
         object[] data = (object[])photonEvent.CustomData;
 

@@ -7,8 +7,6 @@ using Photon.Realtime;
 public class PlayerCoordinates : MonoBehaviourPunCallbacks
 {
 
-    const byte POSITION_EVENT = 10;
-
     [SerializeField] float sendRate = 10f;
     [SerializeField] TMP_Text debugText;
 
@@ -40,7 +38,7 @@ public class PlayerCoordinates : MonoBehaviourPunCallbacks
         object[] data = { p.x, p.y, p.z, y };
 
         PhotonNetwork.RaiseEvent(
-            POSITION_EVENT,
+            SimEvents.POSITION_EVENT,
             data,
             new RaiseEventOptions { Receivers = ReceiverGroup.Others },
             new SendOptions { Reliability = false }
