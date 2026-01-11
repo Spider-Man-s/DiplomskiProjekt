@@ -3,8 +3,8 @@ using Photon.Pun;
 using Photon.Realtime;
 using ExitGames.Client.Photon;
 
-public class ARFireReceiver : MonoBehaviourPunCallbacks, IOnEventCallback
-{
+public class ARFireReceiver : MonoBehaviourPunCallbacks//, IOnEventCallback
+{/*
     private const byte EVENT_FIRE_ACTIVATED = 1;
 
     [SerializeField] FireZone[] fireZones;
@@ -28,4 +28,5 @@ public class ARFireReceiver : MonoBehaviourPunCallbacks, IOnEventCallback
             }
         }
     }
+    */
 }

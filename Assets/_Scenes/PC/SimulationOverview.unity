@@ -2925,9 +2925,9 @@ MonoBehaviour:
     houseRoot: {fileID: 1103441662}
     playerIcon: {fileID: 1103441661}
     spawnAnchor: {fileID: 1340561631}
-    worldMinX: 0.74
-    worldMaxX: -23.69
-    worldMinZ: -6.75
+    worldMinX: 1
+    worldMaxX: -23.5
+    worldMinZ: -7
     worldMaxZ: 6.34
     houseYaw: -90
     iconFacingOffset: 0

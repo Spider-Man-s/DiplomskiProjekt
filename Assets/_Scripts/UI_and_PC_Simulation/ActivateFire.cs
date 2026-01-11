@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Photon.Pun;
 using Photon.Realtime;
 using ExitGames.Client.Photon;
+using System.Collections;
 
 public class ActivateFire : MonoBehaviour
 {
@@ -12,8 +13,11 @@ public class ActivateFire : MonoBehaviour
     [SerializeField] private Color selectedColor = Color.red;
 
     private bool[] isSelected;
+    private float delayTimer = 3f;
 
     private const byte EVENT_FIRE_ACTIVATED = 1;
+
+    private const byte EVENT_FIRE_SELECTION = 22;
 
     private void Awake()
     {
@@ -57,21 +61,22 @@ public class ActivateFire : MonoBehaviour
 
     public void SendSelectedFiresToAR()
     {
-        for (int i = 0; i < isSelected.Length; i++)
-        {
-            if (!isSelected[i]) continue;
+        int[] selected = GetSelectedFireIndices();
 
-            int fireId = i + 1;
+        PhotonNetwork.RaiseEvent(
+            EVENT_FIRE_SELECTION,
+            selected,
+            new RaiseEventOptions { Receivers = ReceiverGroup.Others },
+            SendOptions.SendReliable
+        );
 
-            PhotonNetwork.RaiseEvent(
-                EVENT_FIRE_ACTIVATED,
-                fireId,
-                new RaiseEventOptions { Receivers = ReceiverGroup.Others },
-                SendOptions.SendReliable
-            );
+        Debug.Log($"[PC] Sent fire selection: {string.Join(",", selected)}");
+    }
 
-            Debug.Log($"[PC] Activated fire {fireId}");
-        }
+
+    public IEnumerator DelayforTime(float delay)
+    {
+        yield return new WaitForSeconds(delay);
     }
 
     /*

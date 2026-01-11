@@ -7,6 +7,7 @@ public class ARHouseSpawner : MonoBehaviour, IOnEventCallback
 {
     const byte HANDSHAKE_DONE_EVENT_H1 = 31;
     const byte HANDSHAKE_DONE_EVENT_H2 = 32;
+    private const byte EVENT_FIRE_SELECTION = 22;
 
     [Header("House Prefabs")]
     [SerializeField] GameObject[] housePrefabs;
@@ -29,6 +30,17 @@ public class ARHouseSpawner : MonoBehaviour, IOnEventCallback
 
     public void OnEvent(EventData photonEvent)
     {
+        if (photonEvent.Code == EVENT_FIRE_SELECTION)
+        {
+            ARSimulationState.SelectedFireIds =
+                (int[])photonEvent.CustomData;
+
+            Debug.Log("[ARHouseSpawner] Cached fire IDs: " +
+                string.Join(",", ARSimulationState.SelectedFireIds));
+
+            return;
+        }
+
         if (photonEvent.Code != HANDSHAKE_DONE_EVENT_H1 &&
             photonEvent.Code != HANDSHAKE_DONE_EVENT_H2)
             return;
@@ -64,6 +76,44 @@ public class ARHouseSpawner : MonoBehaviour, IOnEventCallback
             anchor.rotation
         );
 
+        ApplyFireSelection(spawnedHouse);
+
         Debug.Log($"[ARHouseSpawner] Spawned house {houseIndex}");
     }
+
+    void ApplyFireSelection(GameObject house)
+    {
+        if (ARSimulationState.SelectedFireIds == null)
+        {
+            Debug.LogWarning("[AR] No fire selection cached yet");
+            return;
+        }
+
+        FireZone[] zones =
+            house.GetComponentsInChildren<FireZone>(true);
+
+        foreach (var zone in zones)
+            zone.SetActive(false);
+
+        foreach (int fireId in ARSimulationState.SelectedFireIds)
+        {
+            foreach (var zone in zones)
+            {
+                if (zone.fireId == fireId)
+                {
+                    zone.SetActive(true);
+                    Debug.Log($"[AR] Activated FireZone {fireId}");
+                }
+            }
+        }
+    }
+
+
+}
+
+
+
+public static class ARSimulationState
+{
+    public static int[] SelectedFireIds;
 }

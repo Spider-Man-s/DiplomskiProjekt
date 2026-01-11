@@ -11,7 +11,7 @@ public class OverviewManager : MonoBehaviour
     public class HouseLayoutData
     {
         public GameObject layoutRoot;   // panel kuće
-        public TMPro.TextMeshProUGUI debugLabel; 
+        public TMPro.TextMeshProUGUI debugLabel;
         public UnityEngine.UI.Image[] fireIcons;       // točke za tu kuću
     }
 
@@ -40,12 +40,12 @@ public class OverviewManager : MonoBehaviour
 
     private void Awake()
     {
-       
+
     }
 
     private void Start()
     {
-        
+
         if (houseLayouts == null || houseLayouts.Length == 0)
         {
             Debug.LogError("[OverviewManager] houseLayouts je prazan ili null!");
@@ -73,7 +73,7 @@ public class OverviewManager : MonoBehaviour
             if (houseLayouts[i].layoutRoot != null)
             {
                 houseLayouts[i].layoutRoot.SetActive(false);
-                Debug.Log($"[OverviewManager] layoutRoot[{i}] = {houseLayouts[i].layoutRoot.name} -> setActive(false)");
+                //   Debug.Log($"[OverviewManager] layoutRoot[{i}] = {houseLayouts[i].layoutRoot.name} -> setActive(false)");
             }
             else
             {
@@ -86,7 +86,7 @@ public class OverviewManager : MonoBehaviour
         if (activeLayout.layoutRoot != null)
         {
             activeLayout.layoutRoot.SetActive(true);
-            Debug.Log($"[OverviewManager] Active layout = {activeLayout.layoutRoot.name} (index {clamped}) -> setActive(true)");
+            // Debug.Log($"[OverviewManager] Active layout = {activeLayout.layoutRoot.name} (index {clamped}) -> setActive(true)");
         }
         else
         {
@@ -116,7 +116,7 @@ public class OverviewManager : MonoBehaviour
             if (activeLayout.fireIcons[i] != null)
             {
                 activeLayout.fireIcons[i].color = fireHiddenColor;
-                Debug.Log($"[OverviewManager] FireIcon[{i}] ({activeLayout.fireIcons[i].name}) -> HIDDEN");
+                //   Debug.Log($"[OverviewManager] FireIcon[{i}] ({activeLayout.fireIcons[i].name}) -> HIDDEN");
             }
             else
             {
@@ -134,8 +134,8 @@ public class OverviewManager : MonoBehaviour
             return;
         }
 
-        Debug.Log("[OverviewManager] SelectedFireIndices: " +
-                  string.Join(",", GameState.SelectedFireIndices));
+        //Debug.Log("[OverviewManager] SelectedFireIndices: " +
+        //            string.Join(",", GameState.SelectedFireIndices));
 
         foreach (int id in GameState.SelectedFireIndices)
         {
@@ -143,7 +143,7 @@ public class OverviewManager : MonoBehaviour
             if (index >= 0 && index < activeLayout.fireIcons.Length && activeLayout.fireIcons[index] != null)
             {
                 activeLayout.fireIcons[index].color = fireActiveColor;
-                Debug.Log($"[OverviewManager] FireIcon ID={id} (index={index}, name={activeLayout.fireIcons[index].name}) -> ACTIVE");
+                //   Debug.Log($"[OverviewManager] FireIcon ID={id} (index={index}, name={activeLayout.fireIcons[index].name}) -> ACTIVE");
                 totalFires++;
             }
             else
@@ -152,7 +152,7 @@ public class OverviewManager : MonoBehaviour
             }
         }
 
-        Debug.Log($"[OverviewManager] Ukupno aktivnih požara: {totalFires}");
+        // Debug.Log($"[OverviewManager] Ukupno aktivnih požara: {totalFires}");
         UpdateCounterText();
     }
 
@@ -294,7 +294,7 @@ public class OverviewManager : MonoBehaviour
         Debug.Log($"[OverviewManager] FinishSimulation: {extinguishedFires}/{totalFires}, time={duration}s");
 
         // učitaj report scenu
-        SceneManager.LoadScene("SimulationReport");  
+        SceneManager.LoadScene("SimulationReport");
     }
 
 
