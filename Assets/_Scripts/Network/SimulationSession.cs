@@ -252,8 +252,46 @@ public class SimulationSession :
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         if (Phase == SimulationPhase.Running)
-            CompleteSimulation("Disconnected");
+            EndSimulationLocally("Disconnected");
+    }
+    public override void OnMasterClientSwitched(Player newMasterClient)
+    {
+        if (Phase == SimulationPhase.Running)
+        {
+            Debug.Log("[SimSession] MasterClient switched → ending simulation");
+            EndSimulationLocally("Disconnected");
+        }
     }
 
+    public override void OnDisconnected(DisconnectCause cause)
+    {
+        if (Phase == SimulationPhase.Running)
+        {
+            Debug.Log("[SimSession] Disconnected from Photon");
+            EndSimulationLocally("Disconnected");
+        }
+    }
+    void EndSimulationLocally(string reason)
+    {
+        Phase = SimulationPhase.Resetting;
+
+        SimulationResults.TotalFires = totalFires;
+        SimulationResults.ExtinguishedFires = extinguishedFires;
+        SimulationResults.DurationSeconds = Time.time - simulationStartTime;
+        SimulationResults.EndReason = reason;
+
+        Debug.Log($"[SimSession] Local simulation end: {reason}");
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            SceneManager.LoadScene("SimulationReport");
+        }
+        else
+        {
+            var arUI = FindObjectOfType<ARResultsUI>(true);
+            if (arUI != null)
+                arUI.gameObject.SetActive(true);
+        }
+    }
 
 }
