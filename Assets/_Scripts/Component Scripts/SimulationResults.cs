@@ -5,6 +5,6 @@ public static class SimulationResults
     public static int TotalFires;
     public static int ExtinguishedFires;
     public static float DurationSeconds;
-    public static bool ARDisconnected;
+    public static string EndReason;
 }
 

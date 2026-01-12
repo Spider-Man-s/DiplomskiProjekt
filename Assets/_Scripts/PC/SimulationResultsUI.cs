@@ -25,7 +25,7 @@ public class SimulationResultsUI : MonoBehaviour
             $"Vrijeme trajanja: {FormatTime(SimulationResults.DurationSeconds)}";
 
         if (arDisconnectedWarning != null)
-            arDisconnectedWarning.SetActive(SimulationResults.ARDisconnected);
+            arDisconnectedWarning.SetActive(SimulationResults.EndReason == "Disconnected");
     }
 
     private string FormatTime(float seconds)

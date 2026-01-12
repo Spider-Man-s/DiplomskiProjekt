@@ -2,6 +2,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using ExitGames.Client.Photon;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum SimulationPhase
 {
@@ -174,31 +175,35 @@ public class SimulationSession :
         if (extinguishedFires >= totalFires && totalFires > 0)
         {
             Debug.Log("[SimSession] All fires extinguished");
-            CompleteSimulation();
+            CompleteSimulation("Completed");
         }
     }
-    void CompleteSimulation()
+    void CompleteSimulation(string reason)
     {
         Phase = SimulationPhase.Resetting;
+
         SimulationResults.TotalFires = totalFires;
         SimulationResults.ExtinguishedFires = extinguishedFires;
         SimulationResults.DurationSeconds = Time.time - simulationStartTime;
-
-        SimulationResults.ARDisconnected = false;
-
-        Debug.Log("[SimSession] Broadcasting SIMULATION_END");
+        SimulationResults.EndReason = reason;
 
         PhotonNetwork.RaiseEvent(
             SimEvents.SIMULATION_END,
-            null,
+            new object[]
+            {
+            totalFires,
+            extinguishedFires,
+            SimulationResults.DurationSeconds,
+            reason
+            },
             new RaiseEventOptions { Receivers = ReceiverGroup.All },
             SendOptions.SendReliable
         );
+
         if (PhotonNetwork.IsMasterClient)
-        {
-            UnityEngine.SceneManagement.SceneManager.LoadScene("SimulationReport");
-        }
+            SceneManager.LoadScene("SimulationReport");
     }
+
 
     public void RequestEndSimulation()
     {
@@ -206,7 +211,7 @@ public class SimulationSession :
             return;
 
         Debug.Log("[SimSession] End requested by PC");
-        CompleteSimulation();
+        CompleteSimulation("Ended by PC");
     }
 
     public void RequestRestartSimulation()
@@ -246,26 +251,9 @@ public class SimulationSession :
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
-        Debug.Log("[SimSession] Player disconnected");
-
-        SimulationResults.TotalFires = totalFires;
-        SimulationResults.ExtinguishedFires = extinguishedFires;
-        SimulationResults.DurationSeconds = Time.time - simulationStartTime;
-        SimulationResults.ARDisconnected = true;
-
-        Phase = SimulationPhase.Resetting;
-
-        PhotonNetwork.RaiseEvent(
-            SimEvents.SIMULATION_END,
-            null,
-            new RaiseEventOptions { Receivers = ReceiverGroup.All },
-            SendOptions.SendReliable
-        );
-
-        if (PhotonNetwork.IsMasterClient) //samo pc ce loadati scenu
-        {
-            UnityEngine.SceneManagement.SceneManager.LoadScene("SimulationReport");
-        }
+        if (Phase == SimulationPhase.Running)
+            CompleteSimulation("Disconnected");
     }
+
 
 }
