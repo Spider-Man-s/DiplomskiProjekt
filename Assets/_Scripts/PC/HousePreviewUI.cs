@@ -4,9 +4,10 @@ using UnityEngine.SceneManagement;
 public class HousePreviewUI : MonoBehaviour
 {
     [Header("Spawn settings")]
-    [SerializeField] private Transform spawnPoint;   // mjesto gdje će se kuća pojaviti
+    [SerializeField] private Transform[] houseSpawnPoints;
     [SerializeField] private GameObject[] housePrefabs;
     [SerializeField] private GameObject infoPopup;
+    [SerializeField] private GameObject infoButton;
 
     private Transform currentModel;
 
@@ -18,10 +19,20 @@ public class HousePreviewUI : MonoBehaviour
             return;
         }
 
-        // Učitaj odabranu kuću iz GameState
-        int index = Mathf.Clamp(GameState.SelectedHouseIndex, 0, housePrefabs.Length - 1);
+        if (houseSpawnPoints == null || houseSpawnPoints.Length < housePrefabs.Length)
+        {
+            Debug.LogError("Nema dovoljno spawn pointova za sve kuće!");
+            return;
+        }
 
-        // Spawna kuću na spawn pointu
+        int index = Mathf.Clamp(
+            GameState.SelectedHouseIndex,
+            0,
+            housePrefabs.Length - 1
+        );
+
+        Transform spawnPoint = houseSpawnPoints[index];
+
         GameObject instance = Instantiate(
             housePrefabs[index],
             spawnPoint.position,
@@ -29,17 +40,6 @@ public class HousePreviewUI : MonoBehaviour
         );
 
         currentModel = instance.transform;
-
-        // Pošalji referencu orbit kameri
-        OrbitCamera orbit = Camera.main.GetComponent<OrbitCamera>();
-        if (orbit != null)
-        {
-            orbit.target = currentModel;     // kamera prati ovu kuću
-        }
-        else
-        {
-            Debug.LogWarning("OrbitCamera nije pronađen na Main Camera!");
-        }
     }
 
     public void OnBackButton()
@@ -51,11 +51,15 @@ public class HousePreviewUI : MonoBehaviour
     {
         if (infoPopup != null)
             infoPopup.SetActive(true);
+        if (infoButton != null)
+            infoButton.SetActive(false);
     }
 
     public void OnCloseInfoButton()
     {
         if (infoPopup != null)
             infoPopup.SetActive(false);
+        if (infoButton != null)
+            infoButton.SetActive(true);
     }
 }

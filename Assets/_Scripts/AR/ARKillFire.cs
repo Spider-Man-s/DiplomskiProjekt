@@ -5,6 +5,7 @@ public class ARKillFire : MonoBehaviour
 {
     public InputActionReference rightTriggerAction;
     [SerializeField] InputActionReference debugKeyboardAction;
+    [SerializeField] private GameObject fireExtinguishEffectPrefab;
     public float checkRadius = 2.0f;
 
     private void OnEnable()
@@ -23,7 +24,12 @@ public class ARKillFire : MonoBehaviour
             || debugKeyboardAction.action.IsPressed())
         {
             Debug.Log("[AR] Debug kill fire key pressed");
+            fireExtinguishEffectPrefab.SetActive(true);
             ExtinguishNearbyFire();
+        }
+        else
+        {
+            fireExtinguishEffectPrefab.SetActive(false);
         }
     }
 
