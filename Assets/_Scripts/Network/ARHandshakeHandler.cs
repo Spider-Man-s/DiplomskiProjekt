@@ -9,6 +9,7 @@ public class ARHandshakeHandler : MonoBehaviour, IOnEventCallback
     [Header("References")]
     [SerializeField] StartCircleDetector startDetector;
     [SerializeField] Button readyButton;
+    [SerializeField] GameObject readyPanel;
 
     bool ready;
 
@@ -48,8 +49,11 @@ public class ARHandshakeHandler : MonoBehaviour, IOnEventCallback
         lastSentAtStart = false;
         lastSentReady = false;
 
+        if (readyPanel != null)
+            readyPanel.SetActive(true);
         if (readyButton != null)
             readyButton.gameObject.SetActive(true);
+
 
         Debug.Log("[ARHandshake] Reset");
     }
