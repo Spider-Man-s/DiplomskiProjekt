@@ -111,5 +111,7 @@ public class ARHandshakeHandler : MonoBehaviour, IOnEventCallback
 
         if (readyButton != null)
             readyButton.gameObject.SetActive(false);
+        if (readyPanel != null)
+            readyPanel.SetActive(false);
     }
 }
