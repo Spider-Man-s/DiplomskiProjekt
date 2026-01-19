@@ -21,7 +21,17 @@ MonoBehaviour:
   m_OverrideGlobalSceneList: 1
   m_Scenes:
   - m_enabled: 1
-    m_path: Assets/Scenes/PCScene.unity
+    m_path: Assets/_Scenes/PC/TitleScreen.unity
+  - m_enabled: 1
+    m_path: Assets/_Scenes/PC/MainMenu.unity
+  - m_enabled: 1
+    m_path: Assets/_Scenes/PC/PreviewScene.unity
+  - m_enabled: 1
+    m_path: Assets/_Scenes/PC/SimulationMenu.unity
+  - m_enabled: 1
+    m_path: Assets/_Scenes/PC/SimulationOverview.unity
+  - m_enabled: 1
+    m_path: Assets/_Scenes/PC/SimulationReport.unity
   m_ScriptingDefines: []
   m_PlayerSettingsYaml:
     m_Settings: []

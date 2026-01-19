@@ -4565,15 +4565,15 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1155233367}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalPosition: {x: 0, y: 0, z: -0}
+  m_LocalScale: {x: 2.2425, y: 2.2425, z: 2.2425}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1350187809}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0.0000038146973, y: 0.00016784668}
+  m_AnchoredPosition: {x: 0.0000038146973, y: 166}
   m_SizeDelta: {x: 280, y: 310}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1155233369
@@ -5598,7 +5598,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 451316433687613793, guid: 4afbb56c40e373b4da9b567372bbab53, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.25
+      value: -0.42
       objectReference: {fileID: 0}
     - target: {fileID: 451316433687613793, guid: 4afbb56c40e373b4da9b567372bbab53, type: 3}
       propertyPath: m_LocalPosition.z
@@ -7621,7 +7621,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6059580397440578084, guid: 59da766189792b94584abd965244022c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.25
+      value: -0.42
       objectReference: {fileID: 0}
     - target: {fileID: 6059580397440578084, guid: 59da766189792b94584abd965244022c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -7703,6 +7703,10 @@ PrefabInstance:
     - target: {fileID: 953189812645060156, guid: 5944d5efc6cfae2478bc4472e94578e8, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 1945037989780518884, guid: 5944d5efc6cfae2478bc4472e94578e8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.408
       objectReference: {fileID: 0}
     - target: {fileID: 2503455724802829463, guid: 5944d5efc6cfae2478bc4472e94578e8, type: 3}
       propertyPath: debugKillKey

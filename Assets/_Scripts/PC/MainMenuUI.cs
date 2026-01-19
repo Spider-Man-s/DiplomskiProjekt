@@ -81,4 +81,8 @@ public class MainMenuUI : MonoBehaviour
         }
 
     }
+    public void returnToMainMenu()
+    {
+        SceneManager.LoadScene("TitleScreen");
+    }
 }
