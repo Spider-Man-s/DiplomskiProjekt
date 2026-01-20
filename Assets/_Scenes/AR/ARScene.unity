@@ -7708,6 +7708,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0.408
       objectReference: {fileID: 0}
+    - target: {fileID: 1945037989878617958, guid: 5944d5efc6cfae2478bc4472e94578e8, type: 3}
+      propertyPath: m_Name
+      value: Right Controller (fire Extinguisher)
+      objectReference: {fileID: 0}
     - target: {fileID: 2503455724802829463, guid: 5944d5efc6cfae2478bc4472e94578e8, type: 3}
       propertyPath: debugKillKey
       value: 273
