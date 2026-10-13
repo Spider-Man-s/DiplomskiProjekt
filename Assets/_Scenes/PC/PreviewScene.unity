@@ -876,6 +876,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1166542366
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1166542367}
+  m_Layer: 0
+  m_Name: SpawnPoint (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1166542367
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1166542366}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &1407727440
 GameObject:
   m_ObjectHideFlags: 0
@@ -1174,6 +1205,67 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1572827724}
   m_CullTransparentMesh: 1
+--- !u!1001 &1691405625
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6838902048968829649, guid: 6a93f58380a12514ebbd80edb17c4042, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6838902048968829649, guid: 6a93f58380a12514ebbd80edb17c4042, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6838902048968829649, guid: 6a93f58380a12514ebbd80edb17c4042, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6838902048968829649, guid: 6a93f58380a12514ebbd80edb17c4042, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6838902048968829649, guid: 6a93f58380a12514ebbd80edb17c4042, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6838902048968829649, guid: 6a93f58380a12514ebbd80edb17c4042, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6838902048968829649, guid: 6a93f58380a12514ebbd80edb17c4042, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6838902048968829649, guid: 6a93f58380a12514ebbd80edb17c4042, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6838902048968829649, guid: 6a93f58380a12514ebbd80edb17c4042, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6838902048968829649, guid: 6a93f58380a12514ebbd80edb17c4042, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7191719868777834663, guid: 6a93f58380a12514ebbd80edb17c4042, type: 3}
+      propertyPath: m_Name
+      value: MuexLab
+      objectReference: {fileID: 0}
+    - target: {fileID: 7191719868777834663, guid: 6a93f58380a12514ebbd80edb17c4042, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6a93f58380a12514ebbd80edb17c4042, type: 3}
 --- !u!1 &1714953355
 GameObject:
   m_ObjectHideFlags: 0
@@ -1383,9 +1475,11 @@ MonoBehaviour:
   houseSpawnPoints:
   - {fileID: 1853064735}
   - {fileID: 601870852}
+  - {fileID: 1166542367}
   housePrefabs:
   - {fileID: 7140975374331257000, guid: 0c1fd2381587b1e4da4a8590860c3e57, type: 3}
   - {fileID: 809956067329467293, guid: 3bff4eea3099e3b4fa46b871cf5f94ee, type: 3}
+  - {fileID: 5931839107200057100, guid: a0ef77b633bf1f944abde5266172e0ca, type: 3}
   infoPopup: {fileID: 334451480}
   infoButton: {fileID: 1407727440}
 --- !u!4 &1772276233
@@ -1992,3 +2086,5 @@ SceneRoots:
   - {fileID: 1772276233}
   - {fileID: 1853064735}
   - {fileID: 601870852}
+  - {fileID: 1166542367}
+  - {fileID: 1691405625}
