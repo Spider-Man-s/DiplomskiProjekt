@@ -113,8 +113,8 @@ namespace Unity.XR.XREAL.Samples
 
         private void RefreshUI()
         {
-            m_RecordText.text = m_IsRecordStarted ? "Stop Record" : "Record";
-            m_StreamText.text = m_IsStreamStarted ? "Stop Stream" : "Stream";
+            m_RecordText.text = m_IsRecordStarted ? "Stop" : "Record";
+            m_StreamText.text = m_IsStreamStarted ? "Stop" : "Stream";
             if (m_IsStreamStarted)
             {
                 m_RecordBtn.gameObject.SetActive(false);
