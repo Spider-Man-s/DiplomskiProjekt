@@ -15,9 +15,15 @@ MonoBehaviour:
   StereoRendering: 2
   InitialTrackingType: 0
   InitialInputSource: 1
-  VirtualController: {fileID: 1406232319260624, guid: afed05c45059824429a2a2322bf6a6c1, type: 3}
+  VirtualController: {fileID: 2141821271062561446, guid: 7247c869a0e200b4e9f97b419845aa97, type: 3}
   SupportMultiResume: 1
   AddtionalPermissions:
   - VIBRATION
+  - CAMERA
+  - AUDIO
+  - RECORD_AUDIO
+  - FOREGROUND_SERVICE_MEDIA_PROJECTION
+  EnableAutoLogcat: 0
+  EnableNativeSessionManager: 0
   SupportDevices: 0100000002000000
   LicenseAsset: {fileID: 0}
