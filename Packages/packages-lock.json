@@ -394,14 +394,14 @@
       "hash": "610157ad762084380380148ba8ce14e266a6da97"
     },
     "com.xreal.xr": {
-      "version": "https://github.com/Spider-Man-s/XrealSDK3.1.git#master",
+      "version": "https://github.com/Spider-Man-s/UnitySDKs.git?path=/Packages/XREAL_SDK3.1#master",
       "depth": 0,
       "source": "git",
       "dependencies": {
         "com.unity.xr.management": "4.4.1",
         "com.unity.xr.core-utils": "2.2.0"
       },
-      "hash": "4c5c2fee9a8fd4f2242bb478580ed1448ac56c42"
+      "hash": "9de7a9baf57eb2f76d70722d2131119606780cfd"
     },
     "org.khronos.unitygltf": {
       "version": "https://github.com/KhronosGroup/UnityGLTF.git",
